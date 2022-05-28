@@ -8,4 +8,4 @@ const gallerySchema = new Schema({
     countCurVisitors: Number,
 });
 
-export const User = new Model("Gallery", gallerySchema);
+export const Gallery = new Model("Gallery", gallerySchema);

@@ -6,4 +6,4 @@ const epochSchema = new Schema({
     yearSpan: String,
 });
 
-export const User = new Model("Epoch", epochSchema);
+export const Epoch = new Model("Epoch", epochSchema);

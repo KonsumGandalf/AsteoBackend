@@ -7,4 +7,4 @@ const artistSchema = new Schema({
     countPaintings: Number,
 });
 
-export const User = new Model("Artist", artistSchema);
+export const Artist = new Model("Artist", artistSchema);

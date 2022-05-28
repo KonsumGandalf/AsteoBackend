@@ -9,6 +9,10 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     },
+    painting: {
+        type: Schema.Types.PaintingId,
+        ref: "Painting",
+    },
 });
 
-export const User = new Model("Post", postSchema);
+export const Post = new Model("Post", postSchema);

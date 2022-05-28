@@ -16,10 +16,6 @@ const paintingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Gallery",
     },
-    post: {
-        type: Schema.Types.ObjectId,
-        ref: "Post",
-    },
 });
 
-export const User = new Model("Painting", paintingSchema);
+export const Painting = new Model("Painting", paintingSchema);
