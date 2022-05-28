@@ -1,6 +1,6 @@
 import { Post } from '../schema/post.js';
 
-export const artistMongoStore = {
+export const postMongoStore = {
     async getAllPosts() {
         return await Post.find().lean() || null;
     },

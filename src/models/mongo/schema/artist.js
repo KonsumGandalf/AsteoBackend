@@ -1,4 +1,6 @@
-import { Schema, Model } from "mongoose";
+import Mongoose from 'mongoose';
+
+const { Schema } = Mongoose;
 
 const artistSchema = new Schema({
     firstName: String,
@@ -7,4 +9,4 @@ const artistSchema = new Schema({
     countPaintings: Number,
 });
 
-export const Artist = new Model("Artist", artistSchema);
+export const Artist = Mongoose.model("Artist", artistSchema);

@@ -1,6 +1,6 @@
 import { Gallery } from '../schema/gallery.js';
 
-export const artistMongoStore = {
+export const galleryMongoStore = {
     async getAllGalleries() {
         return await Gallery.find().lean() || null;
     },

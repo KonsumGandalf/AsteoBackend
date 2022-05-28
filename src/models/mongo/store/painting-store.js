@@ -1,6 +1,6 @@
-import { Painting } from '../schema/painting';
+import { Painting } from '../schema/painting.js';
 
-export const artistMongoStore = {
+export const paintingMongoStore = {
     async getAllPaintings() {
         return await Painting.find().lean() || null;
     },

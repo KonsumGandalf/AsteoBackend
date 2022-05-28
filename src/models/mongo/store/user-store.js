@@ -1,6 +1,6 @@
 import { User } from '../schema/user.js';
 
-export const artistMongoStore = {
+export const userMongoStore = {
     async getAllUsers() {
         return await User.find().lean() || null;
     },

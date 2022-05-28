@@ -1,6 +1,6 @@
-import { Epoch } from '../schema/epoch';
+import { Epoch } from '../schema/epoch.js';
 
-export const artistMongoStore = {
+export const epochMongoStore = {
     async getAllEpochs() {
         return await Epoch.find().lean() || null;
     },

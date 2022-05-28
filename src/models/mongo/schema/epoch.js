@@ -1,4 +1,6 @@
-import { Schema, Model } from "mongoose";
+import Mongoose from 'mongoose';
+
+const { Schema } = Mongoose;
 
 const epochSchema = new Schema({
     name: String,
@@ -6,4 +8,4 @@ const epochSchema = new Schema({
     yearSpan: String,
 });
 
-export const Epoch = new Model("Epoch", epochSchema);
+export const Epoch = Mongoose.model("Epoch", epochSchema);

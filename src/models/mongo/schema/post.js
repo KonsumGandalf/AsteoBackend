@@ -1,4 +1,6 @@
-import { Schema, Model } from "mongoose";
+import Mongoose from 'mongoose';
+
+const { Schema } = Mongoose;
 
 const postSchema = new Schema({
     headline: String,
@@ -9,10 +11,10 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     },
-    painting: {
-        type: Schema.Types.PaintingId,
-        ref: "Painting",
+    gallery: {
+        type: Schema.Types.ObjectId,
+        ref: "Gallery",
     },
 });
 
-export const Post = new Model("Post", postSchema);
+export const Post = Mongoose.model("Post", postSchema);
