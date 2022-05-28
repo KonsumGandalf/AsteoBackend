@@ -1,0 +1,51 @@
+{
+  "name": "asteobackend",
+  "version": "0.0.0",
+  "description": "This Project should host an api with a function mongo db to administrate a map of museums",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "pm2 start src/server.js --watch",
+    "node_start": "node src/server.js",
+    "dev": "npx nodemon src/server.js",
+    "stop": "pm2 stop src/server.js",
+    "lint": "./node_modules/.bin/eslint . --ext .js",
+    "test": "node ./node_modules/mocha/bin/mocha --ui tdd test/*/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:KonsumGandalf/AsteoBackend.git"
+  },
+  "keywords": [
+    "backend",
+    "node.js"
+  ],
+  "author": "CodingGandalf",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^9.1.4",
+    "@hapi/cookie": "^11.0.2",
+    "@hapi/hapi": "^20.2.1",
+    "@hapi/inert": "^6.0.5",
+    "@hapi/vision": "^6.1.0",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.0",
+    "handlebars": "^4.7.7",
+    "hapi-auth-jwt2": "^10.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mais-mongoose-seeder": "^1.0.7",
+    "mongoose": "^6.2.9"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "eslint": "^8.12.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "mocha": "^9.2.2",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.1"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}
