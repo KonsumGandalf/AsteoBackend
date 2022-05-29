@@ -21,4 +21,21 @@ export const paintingMongoStore = {
         return await Painting.find({ gallery: gallery }).lean() || null;
     },
 
+    /**
+    * This method allows to create an painting, but checks first if the specified parameters
+    * are already used for one and returns in the end the new / found object
+    * @param {*} paintingCreated
+    */
+     async createPainting(paintingCreated) {
+        const alreadyCreated = await Painting.findOne({
+            title: paintingCreated.title,
+            artist: paintingCreated.artist,
+        });
+        if (alreadyCreated) return alreadyCreated;
+        return await new Painting(paintingCreated).save();
+    },
+
+    async deleteAll() {
+      await Painting.deleteMany({});
+    },
 };
