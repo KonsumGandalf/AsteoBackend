@@ -16,4 +16,16 @@ export const postMongoStore = {
     async getPostsByPainting(id) {
         return await Post.find({ painting: id }).lean() || null;
     },
+
+    /**
+    * This method allows to create an post and returns the new object
+    * @param {*} postCreated
+    */
+    async createPost(postCreated) {
+        return await new Post(postCreated).save();
+    },
+
+    async deleteAll() {
+      await Post.deleteMany({});
+    },
 };

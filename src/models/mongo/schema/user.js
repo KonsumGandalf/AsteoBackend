@@ -10,6 +10,10 @@ const userSchema = new Schema({
     password: String,
     rank: Number,
     countPosting: Number,
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
 });
 
 export const User = Mongoose.model("User", userSchema);

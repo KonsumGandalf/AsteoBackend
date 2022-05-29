@@ -18,6 +18,10 @@ const paintingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Gallery",
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
 });
 
 export const Painting = Mongoose.model("Painting", paintingSchema);

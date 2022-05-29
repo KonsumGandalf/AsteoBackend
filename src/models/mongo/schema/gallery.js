@@ -8,6 +8,10 @@ const gallerySchema = new Schema({
     lng: String,
     countAllVisitors: Number,
     countCurVisitors: Number,
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
 });
 
 export const Gallery = Mongoose.model("Gallery", gallerySchema);

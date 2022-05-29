@@ -1,83 +1,4 @@
 export const seedData = {
-  artists: {
-    _model: "Artist",
-    vanGogh: {
-      firstName: "Vincent",
-      lastName: "van Gogh",
-      description: "Vincent van Gogh was a Dutch painter, generally considered to be the greatest after Rembrandt van Rijn, and one of the greatest of the PostImpressionists. He sold only one artwork during his life, but in the century after his death he became perhaps the most recognized painter of all time.",
-      countPaintings: 20,
-    },
-    daVinci: {
-      firstName: "Leonardo",
-      lastName: "da Vinci",
-      description: "Leonardo da Vinci was an artist and engineer who is best known for his paintings, notably the Mona Lisa (c. 1503–19) and the Last Supper (1495–98). His drawing of the Vitruvian Man (c. 1490) has also become a cultural icon. Leonardo is sometimes credited as the inventor of the tank, helicopter, parachute, and flying machine, among other vehicles and devices, but later scholarship has disputed such claims. Nonetheless, Leonardo's notebooks reveal a sharp intellect, and his contributions to art, including methods of representing space, threedimensional objects, and the human figure, cannot be overstated.",
-      countPaintings: 5,
-    },
-    picasso: {
-      firstName: "Pablo",
-      lastName: "Picasso",
-      description: "Pablo Picasso, in full Pablo Diego José Francisco de Paula Juan Nepomuceno Crispín Crispiniano María Remedios de la Santísima Trinidad Ruiz Picasso, also called (before 1901) Pablo Ruiz or Pablo Ruiz Picasso, (born October 25, 1881, Málaga, Spain—died April 8, 1973, Mougins, France), Spanish expatriate painter, sculptor, printmaker, ceramicist, and stage designer, one of the greatest and mostinfluential artists of the 20th century and the creator (with Georges Braque) of Cubism. (For more information on Picasso's name see Researcher's Note: Picasso's full name. The enormous body of Picasso's work remains, and the legend lives on—a tribute to the vitality of the “disquieting” Spaniard with the “sombre…piercing” eyes who superstitiously believed that work would keep him alive. For nearly 80 of his 91 years, Picasso devoted himself to an artistic production that contributed significantly to and paralleled the whole development of modern art in the 20th century.",
-    },
-    rembrandt: {
-      firstName: "Rembrandt",
-      lastName: "Harmenszoon van Rijn",
-      description: "Rembrandt, in full Rembrandt Harmenszoon van Rijn, Rembrandt originally spelled Rembrant, (born July 15, 1606, Leiden, Netherlands—died October 4, 1669, Amsterdam), Dutch Baroque painter and printmaker, one of the greatest storytellers in the history of art, possessing an exceptional ability to render people in their various moods and dramatic guises. Rembrandt is also known as a painter of light and shade and as an artist who favoured an uncompromising realism that would lead some critics to claim that he preferred ugliness to beauty. Early in his career and for some time, Rembrandt painted mainly portraits. Although he continued to paint—and etch and, occasionally, draw—portraits throughout his career, he did so less frequently over time. Roughly one-tenth of his painted and etched oeuvre consists of studies of his own face as well as more-formal self-portraits, a fact that has led to much speculation.",
-    },
-  },
-  epochs: {
-    _model: "Epoch",
-    postImpressionism: {
-      name: "Post-Impressionism",
-      description: "Post-Impressionism, in Western painting, movement in France that represented both an extension of Impressionism and a rejection of that style’s inherent limitations. The term Post-Impressionism was coined by the English art critic Roger Fry for the work of such late 19th-century painters as Paul Cézanne, Georges Seurat, Paul Gauguin, Vincent van Gogh, Henri de Toulouse-Lautrec, and others. All of these painters except van Gogh were French, and most of them began as Impressionists; each of them abandoned the style, however, to form his own highly personal art. Impressionism was based, in its strictest sense, on the objective recording of nature ...",
-      yearSpan: "1890 - 1920",
-    },
-    renaissance: {
-      name: "Renaissance",
-      description: "Renaissance art, painting, sculpture, architecture, music, and literature produced during the 14th, 15th, and 16th centuries in Europe under the combined influences of an increased awareness of nature, a revival of classical learning, and a more individualistic view of man. Scholars no longer believe that the Renaissance marked an abrupt break with medieval values, as is suggested by the French word renaissance, literally “rebirth.” Rather, historical sources suggest that interest in nature, humanistic learning, and individualism were already present in the late medieval period and became dominant in 15th- and 16th-century Italy concurrently with social and economic changes such as the secularization of daily life, the rise of a rational money-credit economy, and greatly increased social mobility.",
-      yearSpan: "14th - 17th century",
-    },
-    cubism: {
-      name: "Cubism",
-      description: "Cubism, highly influential visual arts style of the 20th century that was created principally by the artists Pablo Picasso and Georges Braque in Paris between 1907 and 1914. The Cubist style emphasized the flat, two-dimensional surface of the picture plane, rejecting the traditional techniques of perspective, foreshortening, modeling, and chiaroscuro and refuting time-honoured theories that art should imitate nature. Cubist painters were not bound to copying form, texture, colour, and space. Instead, they presented a new reality in paintings that depicted radically fragmented objects. Cubism derived its name from remarks that were made by the critic Louis Vauxcelles, who derisively described Braque’s 1908 work Houses at L’Estaque as being composed of cubes. In Braque’s painting, the volumes of the houses, the cylindrical forms of the trees, and the tan-and-green colour scheme are reminiscent of Paul Cézanne’s landscapes, which deeply inspired the Cubists in their first stage of development (until 1909). It was, however, Les Demoiselles d’Avignon, painted by Picasso in 1907, that presaged the new style; in this work, the forms of five female nudes become fractured, angular shapes. As in Cézanne’s art, perspective is rendered through colour, with the warm reddish-browns advancing and the cool blues receding.",
-      yearSpan: "1908 - 1929",
-    },
-    baroque: {
-      name: "Baroque",
-      description: "Baroque art and architecture, the visual arts and building design and construction produced during the era in the history of Western art that roughly coincides with the 17th century. The earliest manifestations, which occurred in Italy, date from the latter decades of the 16th century, while in some regions, notably Germany and colonial South America, certain culminating achievements of Baroque did not occur until the 18th century. The work that distinguishes the Baroque period is stylistically complex, even contradictory. In general, however, the desire to evoke emotional states by appealing to the senses, often in dramatic ways, underlies its manifestations. Some of the qualities most frequently associated with the Baroque are grandeur, sensuous richness, drama, vitality, movement, tension, emotional exuberance, and a tendency to blur distinctions between the various arts.",
-      yearSpan: "16th - 18th century",
-    },
-  },
-  galleries: {
-    _model: "Gallery",
-    vanGoghMuseum: {
-      name: "Van Gogh Museum",
-      lat: "52.358353",
-      lng: "4.880563",
-      countAllVisitors: 0,
-      countCurVisitors: 0,
-    },
-    rijksmuseum: {
-      name: "Rijksmuseum",
-      lat: "52.359438",
-      lng: "4.884338",
-      countAllVisitors: 0,
-      countCurVisitors: 0,
-    },
-    museuPicasso: {
-      name: "MuseuPicasso",
-      lat: "41.38519420306767",
-      lng: "2.1808341153497857",
-      countAllVisitors: 0,
-      countCurVisitors: 0,
-    },
-    louvres: {
-      name: "Louvres",
-      lat: "49.04295293064281",
-      lng: "2.5065192561463028",
-      countAllVisitors: 0,
-      countCurVisitors: 0,
-    },
-  },
   users: {
     _model: "User",
     paintingGandalf: {
@@ -95,7 +16,7 @@ export const seedData = {
       username: "DarkVader",
       email: "vader@imperium.com",
       password: "secret",
-      rank: 0,
+      rank: 2,
       countPosting: 0,
     },
     luke: {
@@ -108,6 +29,97 @@ export const seedData = {
       countPosting: 0,
     },
   },
+  artists: {
+    _model: "Artist",
+    vanGogh: {
+      firstName: "Vincent",
+      lastName: "van Gogh",
+      description: "Vincent van Gogh was a Dutch painter, generally considered to be the greatest after Rembrandt van Rijn, and one of the greatest of the PostImpressionists. He sold only one artwork during his life, but in the century after his death he became perhaps the most recognized painter of all time.",
+      countPaintings: 20,
+      user: "->users.luke",
+    },
+    daVinci: {
+      firstName: "Leonardo",
+      lastName: "da Vinci",
+      description: "Leonardo da Vinci was an artist and engineer who is best known for his paintings, notably the Mona Lisa (c. 1503–19) and the Last Supper (1495–98). His drawing of the Vitruvian Man (c. 1490) has also become a cultural icon. Leonardo is sometimes credited as the inventor of the tank, helicopter, parachute, and flying machine, among other vehicles and devices, but later scholarship has disputed such claims. Nonetheless, Leonardo's notebooks reveal a sharp intellect, and his contributions to art, including methods of representing space, threedimensional objects, and the human figure, cannot be overstated.",
+      countPaintings: 5,
+      user: "->users.luke",
+    },
+    picasso: {
+      firstName: "Pablo",
+      lastName: "Picasso",
+      description: "Pablo Picasso, in full Pablo Diego José Francisco de Paula Juan Nepomuceno Crispín Crispiniano María Remedios de la Santísima Trinidad Ruiz Picasso, also called (before 1901) Pablo Ruiz or Pablo Ruiz Picasso, (born October 25, 1881, Málaga, Spain—died April 8, 1973, Mougins, France), Spanish expatriate painter, sculptor, printmaker, ceramicist, and stage designer, one of the greatest and mostinfluential artists of the 20th century and the creator (with Georges Braque) of Cubism. (For more information on Picasso's name see Researcher's Note: Picasso's full name. The enormous body of Picasso's work remains, and the legend lives on—a tribute to the vitality of the “disquieting” Spaniard with the “sombre…piercing” eyes who superstitiously believed that work would keep him alive. For nearly 80 of his 91 years, Picasso devoted himself to an artistic production that contributed significantly to and paralleled the whole development of modern art in the 20th century.",
+      user: "->users.luke",
+    },
+    rembrandt: {
+      firstName: "Rembrandt",
+      lastName: "Harmenszoon van Rijn",
+      description: "Rembrandt, in full Rembrandt Harmenszoon van Rijn, Rembrandt originally spelled Rembrant, (born July 15, 1606, Leiden, Netherlands—died October 4, 1669, Amsterdam), Dutch Baroque painter and printmaker, one of the greatest storytellers in the history of art, possessing an exceptional ability to render people in their various moods and dramatic guises. Rembrandt is also known as a painter of light and shade and as an artist who favoured an uncompromising realism that would lead some critics to claim that he preferred ugliness to beauty. Early in his career and for some time, Rembrandt painted mainly portraits. Although he continued to paint—and etch and, occasionally, draw—portraits throughout his career, he did so less frequently over time. Roughly one-tenth of his painted and etched oeuvre consists of studies of his own face as well as more-formal self-portraits, a fact that has led to much speculation.",
+      user: "->users.vader",
+    },
+  },
+  epochs: {
+    _model: "Epoch",
+    postImpressionism: {
+      name: "Post-Impressionism",
+      description: "Post-Impressionism, in Western painting, movement in France that represented both an extension of Impressionism and a rejection of that style’s inherent limitations. The term Post-Impressionism was coined by the English art critic Roger Fry for the work of such late 19th-century painters as Paul Cézanne, Georges Seurat, Paul Gauguin, Vincent van Gogh, Henri de Toulouse-Lautrec, and others. All of these painters except van Gogh were French, and most of them began as Impressionists; each of them abandoned the style, however, to form his own highly personal art. Impressionism was based, in its strictest sense, on the objective recording of nature ...",
+      yearSpan: "1890 - 1920",
+      user: "->users.vader",
+    },
+    renaissance: {
+      name: "Renaissance",
+      description: "Renaissance art, painting, sculpture, architecture, music, and literature produced during the 14th, 15th, and 16th centuries in Europe under the combined influences of an increased awareness of nature, a revival of classical learning, and a more individualistic view of man. Scholars no longer believe that the Renaissance marked an abrupt break with medieval values, as is suggested by the French word renaissance, literally “rebirth.” Rather, historical sources suggest that interest in nature, humanistic learning, and individualism were already present in the late medieval period and became dominant in 15th- and 16th-century Italy concurrently with social and economic changes such as the secularization of daily life, the rise of a rational money-credit economy, and greatly increased social mobility.",
+      yearSpan: "14th - 17th century",
+      user: "->users.vader",
+    },
+    cubism: {
+      name: "Cubism",
+      description: "Cubism, highly influential visual arts style of the 20th century that was created principally by the artists Pablo Picasso and Georges Braque in Paris between 1907 and 1914. The Cubist style emphasized the flat, two-dimensional surface of the picture plane, rejecting the traditional techniques of perspective, foreshortening, modeling, and chiaroscuro and refuting time-honoured theories that art should imitate nature. Cubist painters were not bound to copying form, texture, colour, and space. Instead, they presented a new reality in paintings that depicted radically fragmented objects. Cubism derived its name from remarks that were made by the critic Louis Vauxcelles, who derisively described Braque’s 1908 work Houses at L’Estaque as being composed of cubes. In Braque’s painting, the volumes of the houses, the cylindrical forms of the trees, and the tan-and-green colour scheme are reminiscent of Paul Cézanne’s landscapes, which deeply inspired the Cubists in their first stage of development (until 1909). It was, however, Les Demoiselles d’Avignon, painted by Picasso in 1907, that presaged the new style; in this work, the forms of five female nudes become fractured, angular shapes. As in Cézanne’s art, perspective is rendered through colour, with the warm reddish-browns advancing and the cool blues receding.",
+      yearSpan: "1908 - 1929",
+      user: "->users.vader",
+    },
+    baroque: {
+      name: "Baroque",
+      description: "Baroque art and architecture, the visual arts and building design and construction produced during the era in the history of Western art that roughly coincides with the 17th century. The earliest manifestations, which occurred in Italy, date from the latter decades of the 16th century, while in some regions, notably Germany and colonial South America, certain culminating achievements of Baroque did not occur until the 18th century. The work that distinguishes the Baroque period is stylistically complex, even contradictory. In general, however, the desire to evoke emotional states by appealing to the senses, often in dramatic ways, underlies its manifestations. Some of the qualities most frequently associated with the Baroque are grandeur, sensuous richness, drama, vitality, movement, tension, emotional exuberance, and a tendency to blur distinctions between the various arts.",
+      yearSpan: "16th - 18th century",
+      user: "->users.vader",
+    },
+  },
+  galleries: {
+    _model: "Gallery",
+    vanGoghMuseum: {
+      name: "Van Gogh Museum",
+      lat: "52.358353",
+      lng: "4.880563",
+      countAllVisitors: 0,
+      countCurVisitors: 0,
+      user: "->users.luke",
+    },
+    rijksmuseum: {
+      name: "Rijksmuseum",
+      lat: "52.359438",
+      lng: "4.884338",
+      countAllVisitors: 0,
+      countCurVisitors: 0,
+      user: "->users.vader",
+    },
+    museuPicasso: {
+      name: "MuseuPicasso",
+      lat: "41.38519420306767",
+      lng: "2.1808341153497857",
+      countAllVisitors: 0,
+      countCurVisitors: 0,
+      user: "->users.vader",
+    },
+    louvres: {
+      name: "Louvres",
+      lat: "49.04295293064281",
+      lng: "2.5065192561463028",
+      countAllVisitors: 0,
+      countCurVisitors: 0,
+      user: "->users.vader",
+    },
+  },
   posts: {
     _model: "Post",
     one: {
@@ -115,7 +127,7 @@ export const seedData = {
       comment: "Very impressive exhibition! The pictures are super presented. Also the curriculum vitae of the artist is well presented.Also very interesting how the pictures are secured",
       time: new Date("2016-05-18T16:00:00Z"),
       rating: 5,
-      author: "->users.vader",
+      user: "->users.vader",
       gallery: "->galleries.vanGoghMuseum",
     },
     two: {
@@ -123,7 +135,7 @@ export const seedData = {
       comment: "The museum is a clear must for every Amsterdam visitor! There is so much to see on different floors, you would need several hours to really look at everything in detail and read through! Of course, you have to be aware that it is very crowded inside and you sometimes have to wait to be able to read through a picture or a description. Especially before the night watch you have to fight for your slot. Also the museum garden and the library are dreamlike!❤️🌷",
       time: new Date(),
       rating: 4,
-      author: "->users.paintingGandalf",
+      user: "->users.paintingGandalf",
       gallery: "->galleries.rijksmuseum",
     },
   },
@@ -136,6 +148,7 @@ export const seedData = {
       epoch: "->epochs.postImpressionism",
       artist: "->artists.vanGogh",
       gallery: "->galleries.vanGoghMuseum",
+      user: "->users.paintingGandalf",
     },
     theNightWatch: {
       title: "The Night Watch",
@@ -144,6 +157,7 @@ export const seedData = {
       epoch: "->epochs.baroque",
       artist: "->artists.rembrandt",
       gallery: "->galleries.rijksmuseum",
+      user: "->users.paintingGandalf",
     },
     cryingWoman: {
       title: "Crying Woman",
@@ -152,6 +166,7 @@ export const seedData = {
       epoch: "->epochs.cubism",
       artist: "->artists.picasso",
       gallery: "->galleries.museuPicasso",
+      user: "->users.paintingGandalf",
     },
     monaLisa: {
       title: "Mona Lisa",
@@ -160,6 +175,7 @@ export const seedData = {
       epoch: "->epochs.renaissance",
       artist: "->artists.daVinci",
       gallery: "->galleries.louvres",
+      user: "->users.vader",
     },
   },
 };

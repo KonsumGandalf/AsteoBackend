@@ -34,7 +34,17 @@
     "hapi-auth-jwt2": "^10.2.0",
     "jsonwebtoken": "^8.5.1",
     "mais-mongoose-seeder": "^1.0.7",
-    "mongoose": "^6.2.9"
+    "mongoose": "^6.2.9",    
+    "arkit": "^1.6.4",
+    "chai": "^4.3.6",
+    "hapi-swagger": "^14.2.5",
+    "joi": "^17.6.0",
+    "lowdb": "^3.0.0",
+    "mocha": "^9.2.2",
+    "mocha-explorer-launcher-scripts": "^0.4.0",
+    "mongo": "^0.1.0",
+    "pm2": "^5.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "chai": "^4.3.6",
