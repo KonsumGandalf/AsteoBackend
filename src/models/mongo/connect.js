@@ -7,7 +7,7 @@ import { seedData } from "./seed-data.js";
 async function seed() {
   const seedObj = seeder.default(mongoose);
   const dbData = await seedObj.seed(seedData, { dropDatabase: false, dropCollections: true });
-  console.log(dbData);
+  // console.log(dbData);
 }
 
 export function connectMongo() {

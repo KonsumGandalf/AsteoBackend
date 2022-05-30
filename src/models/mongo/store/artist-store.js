@@ -6,7 +6,8 @@ export const artistMongoStore = {
     },
 
     async getArtistById(id) {
-        return await Artist.findOne({ _id: id }) || null;
+        const artist = await Artist.findOne({ _id: id }) || null;
+        return artist;
     },
 
     /**
@@ -17,41 +18,44 @@ export const artistMongoStore = {
     async createArtist(artistCreated) {
         const alreadyCreated = await Artist.findOne({
             firstName: artistCreated.firstName,
-            secondName: artistCreated.secondName,
+            lastName: artistCreated.lastName,
         });
         if (alreadyCreated) return alreadyCreated;
         return await new Artist(artistCreated).save();
     },
 
-    /**
-     * This method deletes an artist if the user has himself created the
-     * artist or the user has an admin rank
-     * @param {String} artistId
-     * @param {*} user
-     * @returns { boolean } the success of the deletion
-     */
-    async deleteArtistById(artistId, user) {
-      try {
-        const artist = await this.getArtistById(artistId);
-        if (artist.user._id === user._id || user.rank > 0) {
-          await Artist.deleteOne({ _id: artistId });
-          return true;
-        }
-        return false;
-      } catch (error) {
-        console.log("bad id");
-        return false;
-      }
-    },
-
-    /**
+  /**
      * The deleteMany() returns a document containing the deleteCount field
      * that stores the number of deleted documents.
-     * @returns {Number} of deleted Entries
+     * @returns {Number}
+     * - n >= 0 for successful deletion
+     * - -1 for missing rights
      */
-    async deleteAll(user) {
-      if (user.rank > 0) {
-        return await Artist.deleteMany({});
-      } return 0;
-    },
+   async deleteAll(user) {
+    if (user.rank > 0) {
+      return await Artist.deleteMany({});
+    } return -1;
+  },
+
+  /**
+   * This method deletes an entry of the database with the given rank
+   * @param {String} deletionArtistId
+   * @param {*} user
+   * @returns
+   * - 1 for successful deletion
+   * - 0 for no possible entry
+   * - -1 for missing rights
+   */
+  async deleteArtistById(deletionArtistId, user) {
+    try {
+      const artist = await this.getArtistById({ _id: deletionArtistId });
+      if (artist.user === user || user.rank > 0) {
+        return await Artist.deleteOne({ _id: deletionArtistId });
+      }
+      return -1;
+    } catch (error) {
+        console.log("bad id");
+        return 0;
+    }
+  },
 };

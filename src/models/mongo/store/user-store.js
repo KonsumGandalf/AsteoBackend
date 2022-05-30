@@ -44,8 +44,8 @@ export const userMongoStore = {
      * @param {*} user
      * @returns
      * - 1 for successful deletion
+     * - 0 for no possible entry
      * - -1 for missing rights
-     * - null for no possible entry
      */
     async deleteUserById(deletionUserId, user) {
       try {

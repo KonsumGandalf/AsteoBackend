@@ -15,6 +15,7 @@ export const epochMongoStore = {
      * @param {*} epochCreated
      */
     async createEpoch(epochCreated) {
+        console.log(epochCreated);
         const alreadyCreated = await Epoch.findOne({
             name: epochCreated.name,
             yearSpan: epochCreated.yearSpan,
@@ -23,7 +24,38 @@ export const epochMongoStore = {
         return await new Epoch(epochCreated).save();
     },
 
-    async deleteAll() {
-      await Epoch.deleteMany({});
-    },
+      /**
+     * The deleteMany() returns a document containing the deleteCount field
+     * that stores the number of deleted documents.
+     * @returns {Number}
+     * - n >= 0 for successful deletion
+     * - -1 for missing rights
+     */
+   async deleteAll(user) {
+    if (user.rank > 0) {
+      return await Epoch.deleteMany({});
+    } return -1;
+  },
+
+  /**
+   * This method deletes an entry of the database with the given rank
+   * @param {String} deletionEpochId
+   * @param {*} user
+   * @returns
+   * - 1 for successful deletion
+   * - 0 for no possible entry
+   * - -1 for missing rights
+   */
+  async deleteEpochById(deletionEpochId, user) {
+    try {
+      const epoch = await this.getEpochById({ _id: deletionEpochId });
+      if (epoch.user === user || user.rank > 0) {
+        return await Epoch.deleteOne({ _id: deletionEpochId });
+      }
+      return -1;
+    } catch (error) {
+        console.log("bad id");
+        return 0;
+    }
+  },
 };

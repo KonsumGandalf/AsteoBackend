@@ -1,4 +1,5 @@
 import { artistsApi } from './api/artist-api.js';
+import { epochsApi } from './api/epoch-api.js';
 import { usersApi } from './api/users-api.js';
 
 export const apiRoutes = [
@@ -14,4 +15,10 @@ export const apiRoutes = [
   { method: "POST", path: "/api/artists", config: artistsApi.create },
   { method: "DELETE", path: "/api/artists", config: artistsApi.deleteAll },
   { method: "DELETE", path: "/api/artists/{id}", config: artistsApi.deleteOne },
+
+  { method: "GET", path: "/api/epochs", config: epochsApi.findAll },
+  { method: "GET", path: "/api/epochs/{id}", config: epochsApi.findOne },
+  { method: "POST", path: "/api/epochs", config: epochsApi.create },
+  { method: "DELETE", path: "/api/epochs", config: epochsApi.deleteAll },
+  { method: "DELETE", path: "/api/epochs/{id}", config: epochsApi.deleteOne },
 ];
