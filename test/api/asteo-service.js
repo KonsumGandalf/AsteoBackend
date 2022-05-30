@@ -59,4 +59,45 @@ export const artistService = {
       const res = await axios.delete(`${serviceUrl}/api/artists/${id}`);
       return res.data;
   },
+
+  async deleteAllArtists() {
+    const res = await axios.delete(`${serviceUrl}/api/artists`);
+    return res.data;
+  },
+
 };
+
+export const epochService = {
+  async createEpoch(epoch) {
+    console.log(epoch.yearSpan);
+    const res = await axios.post(`${serviceUrl}/api/epochs`, epoch);
+    return res.data;
+  },
+
+  async getEpoch(id) {
+      const res = await axios.get(`${serviceUrl}/api/epochs/${id}`);
+      return res.data;
+  },
+
+  async getAllEpochs() {
+      const res = await axios.get(`${serviceUrl}/api/epochs`);
+      return res.data;
+  },
+
+  async deleteEpoch(id) {
+      const res = await axios.delete(`${serviceUrl}/api/epochs/${id}`);
+      return res.data;
+  },
+
+  async deleteAllEpochs() {
+    const res = await axios.delete(`${serviceUrl}/api/epochs`);
+    return res.data;
+  },
+
+};
+
+export function consoleMan(input, output) {
+  console.log("Console Man");
+  console.log(input);
+  console.log(output);
+}

@@ -58,13 +58,15 @@ suite("User API tests", () => {
   test("delete one user - fail - missing rights", async () => {
     const normalUser = await userService.createUser(lukeRank0);
     const superUser = await userService.createUser(vaderRank2);
+    await userService.clearAuth();
     await userService.authenticate(lukeRank0);
     try {
       await userService.deleteUser(superUser._id);
       assert.fail("Should not be returned - user misses the rights to do this");
     } catch (error) {
-      assert(error.response.data.message === "Missing rights to delete this user.");
+      assert.equal(error.response.data.message, "Missing rights to delete this user.");
       assert.equal(error.response.data.statusCode, 400);
+      assert.equal(1, 1);
     }
   });
 
@@ -77,6 +79,7 @@ suite("User API tests", () => {
     } catch (error) {
       assert(error.response.data.message === "Missing right to delete all users.");
       assert.equal(error.response.data.statusCode, 400);
+      assert.equal(1, 1);
     }
   });
 
@@ -94,6 +97,7 @@ suite("User API tests", () => {
     } catch (error) {
       assert(error.response.data.message === "No user with the given id");
       assert.equal(error.response.data.statusCode, 404);
+      assert.equal(1, 1);
     }
   });
 });

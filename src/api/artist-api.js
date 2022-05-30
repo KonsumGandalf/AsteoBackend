@@ -14,7 +14,7 @@ export const artistsApi = {
           try {
               const artistTemplate = {
                   firstName: request.payload.firstName,
-                  secondName: request.payload.secondName,
+                  lastName: request.payload.lastName,
                   description: request.payload.description,
                   countPaintings: request.payload.countPaintings,
                   user: request.auth.credentials,
@@ -38,13 +38,13 @@ export const artistsApi = {
         strategy: "jwt",
     },
     handler: async () => {
-        try {
-            const artists = await db.artistStore.getAllArtists();
-            if (artists) return artists;
-            return Boom.notFound("No artists in the Database");
-        } catch (err) {
-            return Boom.serverUnavailable("Database Error - No artists in the Database");
-        }
+      try {
+          const artists = await db.artistStore.getAllArtists();
+          if (artists) return artists;
+          return Boom.notFound("No artists in the Database");
+      } catch (err) {
+          return Boom.serverUnavailable("Database Error - No artists in the Database");
+      }
     },
     tags: ["api", "artist"],
     description: "Get all artists of the db",
@@ -52,59 +52,64 @@ export const artistsApi = {
     // response: { schema: ExampleArrays.PlaylistArray, failAction: validationError },
     },
 
-    findOne: {
-        auth: {
-            strategy: "jwt",
-        },
-        handler: async (request) => {
-            try {
-                const artist = await db.artistStore.getArtistById(request.params.id);
-                if (artist) return artist;
-                return Boom.notFound("No artist with the given id");
-            } catch (err) {
-                return Boom.serverUnavailable("Database Error - No artist with the given id");
-            }
-        },
-        tags: ["api", "artist"],
-        description: "Get the artist with the given id",
-        notes: "Return one specific artist",
-        // validate: { params: { id: IdSpec }, failAction: validationError },
-        // response: { schema: PlaylistSpec, failAction: validationError },
-    },
-
-    deleteOne: {
-        auth: {
-            strategy: "jwt",
-        },
-        handler: async (request, h) => {
-            try {
-                const user = request.auth.credentials;
-                const success = await db.artistStore.deleteArtistById(request.params.id, user);
-                if (success) return h.response(success).code(204);
-                return Boom.badImplementation(`No artist with the id ${request.params.id} or missing rights`);
-            } catch (err) {
-                return Boom.serverUnavailable(`Database Error - No playlist with the id  ${request.params.id} => could not be deleted`);
-            }
-        },
-        tags: ["api", "artist"],
-        description: "Deletes the artist with the given id",
-        notes: "Returns the deletion success status.",
-        // validate: { params: { id: IdSpec }, failAction: validationError },
-    },
-
-    deleteAll: {
+  findOne: {
       auth: {
+          strategy: "jwt",
+      },
+      handler: async (request) => {
+          try {
+            const artist = await db.artistStore.getArtistById(request.params.id);
+            if (!artist) return Boom.notFound("No artist with the given id");
+            return artist;
+          } catch (err) {
+              return Boom.serverUnavailable("Database Error - No artist with the given id");
+          }
+      },
+      tags: ["api", "artist"],
+      description: "Get the artist with the given id",
+      notes: "Return one specific artist",
+      // validate: { params: { id: IdSpec }, failAction: validationError },
+      // response: { schema: PlaylistSpec, failAction: validationError },
+  },
+
+  deleteOne: {
+    auth: {
         strategy: "jwt",
-      },
-      handler: async (request, h) => {
-        try {
-          const user = request.auth.credentials;
-          const success = await db.artistStore.deleteAll(user);
-          if (success) return h.response(success).code(204);
-          return Boom.badImplementation(`Missing rights`);
-        } catch (err) {
-          return Boom.serverUnavailable("Database Error - No users in Database");
-        }
-      },
     },
+    handler: async (request, h) => {
+      try {
+        const requestingUser = request.auth.credentials;
+        const success = await db.artistStore.deleteArtistById(request.params.id, requestingUser);
+        switch (success) {
+          case -1: return Boom.badRequest("Missing rights to delete this artist.");
+          case 0: return Boom.badImplementation(`No artist with id ${request.params.id} => could not be deleted`);
+          default: return h.response(success).code(204);
+        }
+      } catch (err) {
+          return Boom.serverUnavailable(`Database Error - No playlist with the id  ${request.params.id} => could not be deleted`);
+      }
+    },
+    tags: ["api", "artist"],
+    description: "Deletes the artist with the given id",
+    notes: "Returns the deletion success status.",
+    // validate: { params: { id: IdSpec }, failAction: validationError },
+  },
+
+  deleteAll: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async (request, h) => {
+      try {
+        const requestingUser = request.auth.credentials;
+        const success = await db.artistStore.deleteAll(requestingUser);
+        switch (success) {
+          case -1: return Boom.badRequest("Missing right to delete all artists.");
+          default: return h.response(success).code(204);
+        }
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error - No artist in Database");
+      }
+    },
+  },
 };

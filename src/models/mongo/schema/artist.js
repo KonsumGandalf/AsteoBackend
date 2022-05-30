@@ -4,7 +4,7 @@ const { Schema } = Mongoose;
 
 const artistSchema = new Schema({
     firstName: String,
-    secondName: String,
+    lastName: String,
     description: String,
     countPaintings: Number,
     user: {

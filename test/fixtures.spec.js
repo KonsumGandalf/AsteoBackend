@@ -18,7 +18,7 @@ export const lukeRank0 = {
   password: "secret",
   rank: 0,
   countPosting: 0,
-}
+};
 
 export const vaderCredentials = {
   username: "DarkVader",
@@ -55,7 +55,7 @@ export const testUsersJson = [
   },
 ];
 
-export const testArtists = [
+export const testArtistsJson = [
   {
     firstName: "Vincent",
     lastName: "van Gogh",
@@ -70,7 +70,7 @@ export const testArtists = [
   },
 ];
 
-export const testEpochs = [
+export const testEpochsJson = [
   {
     name: "Post-Impressionism",
     description: "Post-Impressionism, in Western painting, movement in France that represented both an extension of Impressionism and a rejection of that style’s inherent limitations. The term Post-Impressionism was coined by the English art critic Roger Fry for the work of such late 19th-century painters as Paul Cézanne, Georges Seurat, Paul Gauguin, Vincent van Gogh, Henri de Toulouse-Lautrec, and others. All of these painters except van Gogh were French, and most of them began as Impressionists; each of them abandoned the style, however, to form his own highly personal art. Impressionism was based, in its strictest sense, on the objective recording of nature ...",
@@ -83,7 +83,7 @@ export const testEpochs = [
   },
 ];
 
-export const testGalleries = [
+export const testGalleriesJson = [
   {
     name: "Van Gogh Museum",
     lat: "52.358353",
@@ -100,7 +100,7 @@ export const testGalleries = [
   },
 ];
 
-export const testPosts = [
+export const testPostsJson = [
   {
     headline: "The artist just had ONE ear!",
     comment: "Very impressive exhibition! The pictures are super presented. Also the curriculum vitae of the artist is well presented.Also very interesting how the pictures are secured",
@@ -115,7 +115,7 @@ export const testPosts = [
   },
 ];
 
-export const testPaintings = [
+export const testPaintingsJson = [
   {
     title: "Starry Night",
     year: 1889,
