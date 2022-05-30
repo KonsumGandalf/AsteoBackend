@@ -154,7 +154,7 @@ suite("Painting API tests", () => {
       assert.fail("Should not be returned - user misses the rights to do this");
     } catch (error) {
       assert.equal(error.response.data.message, "Missing rights to delete this painting.");
-      assert.equal(error.response.data.statusCode, 400SsS);
+      assert.equal(error.response.data.statusCode, 400);
     }
   });
 
