@@ -42,7 +42,6 @@ export const galleriesApi = {
     handler: async () => {
       try {
           const galleries = await db.galleryStore.getAllGalleries();
-          console.log(galleries);
           if (galleries) return galleries;
           return Boom.notFound("No galleries in the Database");
       } catch (err) {
@@ -83,7 +82,6 @@ export const galleriesApi = {
       try {
         const requestingUser = request.auth.credentials;
         const success = await db.galleryStore.deleteGalleryById(request.params.id, requestingUser);
-        console.log(`success: ${success}`);
         switch (success) {
           case -1: return Boom.badRequest("Missing rights to delete this gallery.");
           case 0: return Boom.badImplementation(`No gallery with id ${request.params.id} => could not be deleted`);

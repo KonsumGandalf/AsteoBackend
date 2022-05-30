@@ -12,10 +12,7 @@ export const postsApi = {
     },
     handler: async (request, h) => {
       try {
-        console.log(request.params.galleryId);
         const gallery = await db.galleryStore.getGalleryById(request.params.galleryId);
-        console.log("creation");
-        console.log(gallery || "creation");
         if (!gallery) {
           return Boom.notFound("No Gallery with this id");
         }
@@ -27,9 +24,7 @@ export const postsApi = {
           gallery: gallery,
           user: request.auth.credentials,
         };
-        console.log(postTemplate);
         const post = await db.postStore.createPost(postTemplate);
-        console.log(`was created${post}`);
         if (post) return h.response(post).code(201);
         return Boom.badImplementation("Error creating post");
       } catch (err) {
@@ -49,7 +44,7 @@ export const postsApi = {
     },
     handler: async (request) => {
       try {
-        /* two different Api Calls are bundled ByUser & ByGallery */
+        /* two different Api Calls are bundled ByUser & ByGallery & ByAll */
         let posts;
         if (request.params.galleryId) {
           posts = await db.postStore.getAllPostsByGallery(request.params.galleryId);
@@ -58,7 +53,6 @@ export const postsApi = {
         } else {
           posts = await db.postStore.getAllPosts();
         }
-        console.log(posts);
         if (posts) return posts;
         return Boom.notFound("No posts in the Database");
       } catch (err) {
@@ -99,7 +93,6 @@ export const postsApi = {
       try {
         const requestingUser = request.auth.credentials;
         const success = await db.postStore.deletePostById(request.params.id, requestingUser);
-        console.log(`success: ${success}`);
         switch (success) {
           case -1: return Boom.badRequest("Missing rights to delete this post.");
           case 0: return Boom.badImplementation(`No post with id ${request.params.id} => could not be deleted`);

@@ -18,7 +18,6 @@ export const epochsApi = {
               yearSpan: request.payload.yearSpan,
               user: request.auth.credentials,
             };
-            console.log(`Epoch: ${epochTemplate.yearSpan}`);
               const epoch = await db.epochStore.createEpoch(epochTemplate);
               if (epoch) return h.response(epoch).code(201);
               return Boom.badImplementation("Error creating epoch");

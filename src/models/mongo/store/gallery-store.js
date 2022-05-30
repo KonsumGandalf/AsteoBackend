@@ -55,7 +55,6 @@ export const galleryMongoStore = {
       }
       return -1;
     } catch (error) {
-      console.log("bad id");
       return 0;
     }
   },

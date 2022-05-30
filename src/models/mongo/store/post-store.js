@@ -43,7 +43,6 @@ export const postMongoStore = {
   * - -1 for missing rights
   */
    async deleteAll(user) {
-     console.log("deleted");
     if (user.rank > 0) {
       return await Post.deleteMany({});
     } return -1;
@@ -67,7 +66,6 @@ export const postMongoStore = {
       }
       return -1;
     } catch (error) {
-      console.log("bad id");
       return 0;
     }
   },

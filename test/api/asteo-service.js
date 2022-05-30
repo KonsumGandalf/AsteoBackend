@@ -97,7 +97,6 @@ export const epochService = {
 
 export const galleryService = {
   async createGallery(gallery) {
-    console.log(gallery.name);
     const res = await axios.post(`${serviceUrl}/api/galleries`, gallery);
     return res.data;
   },
@@ -158,6 +157,55 @@ export const postService = {
 
   async deleteAllPosts() {
     const res = await axios.delete(`${serviceUrl}/api/posts`);
+    return res.data;
+  },
+
+};
+
+export const paintingService = {
+  async createPainting(painting) {
+    const res = await axios.post(`${serviceUrl}/api/paintings`, painting);
+    return res.data;
+  },
+
+  // PLEASE LOOK FOR ERRORS with the smaller url
+  async getPainting(id) {
+    const res = await axios.get(`${serviceUrl}/api/paintings/${id}`);
+    return res.data;
+  },
+
+  async getAllPaintings() {
+    const res = await axios.get(`${serviceUrl}/api/paintings`);
+    return res.data;
+  },
+
+  async getAllPaintingsByGallery(galleryId) {
+    console.log("getAllPaintingsByGallery");
+
+      const res = await axios.get(`${serviceUrl}/api/galleries/${galleryId}/paintings`);
+      return res.data;
+  },
+
+  async getAllPaintingsByArtist(artistId) {
+    console.log("getAllPaintingsByArtist");
+    const res = await axios.get(`${serviceUrl}/api/artists/${artistId}/paintings`);
+    return res.data;
+  },
+
+  async getAllPaintingsByEpoch(epochId) {
+    console.log("getAllPaintingsByEpoch");
+
+    const res = await axios.get(`${serviceUrl}/api/epochs/${epochId}/paintings`);
+    return res.data;
+  },
+
+  async deletePainting(id) {
+      const res = await axios.delete(`${serviceUrl}/api/paintings/${id}`);
+      return res.data;
+  },
+
+  async deleteAllPaintings() {
+    const res = await axios.delete(`${serviceUrl}/api/paintings`);
     return res.data;
   },
 

@@ -15,7 +15,6 @@ export const epochMongoStore = {
    * @param {*} epochCreated
    */
   async createEpoch(epochCreated) {
-    console.log(epochCreated);
     const alreadyCreated = await Epoch.findOne({
       name: epochCreated.name,
       yearSpan: epochCreated.yearSpan,
@@ -55,7 +54,6 @@ export const epochMongoStore = {
       }
       return -1;
     } catch (error) {
-      console.log("bad id");
       return 0;
     }
   },
