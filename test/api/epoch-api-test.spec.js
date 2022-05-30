@@ -23,7 +23,6 @@ suite("Epoch API tests", () => {
         name: testEpochsJson[i].name,
         description: testEpochsJson[i].description,
         yearSpan: testEpochsJson[i].yearSpan,
-        user: superUser._id,
       };
       testEpochs[i] = await epochService.createEpoch(epochTemplate);
     }
@@ -36,7 +35,6 @@ suite("Epoch API tests", () => {
       lastName: testEpochsJson[0].lastName,
       description: testEpochsJson[0].description,
       countPaintings: testEpochsJson[0].countPaintings,
-      user: superUser._id,
     };
     const newEpoch = await epochService.createEpoch(epochTemplate);
     assertSubset(testEpochsJson[0], newEpoch);
@@ -66,6 +64,35 @@ suite("Epoch API tests", () => {
     await epochService.deleteAllEpochs();
     returnedEpochs = await epochService.getAllEpochs();
     assert.equal(returnedEpochs.length, 0);
+  });
+
+  test("delete one epoch - successful - baseUser deletes own object", async () => {
+    // authenticate with superUser
+    await epochService.deleteAllEpochs();
+    let allEpochs = await epochService.getAllEpochs();
+    assert.equal(allEpochs.length, 0);
+    await userService.clearAuth();
+    // new authentication with baseUser
+    await userService.createUser(lukeRank0);
+    await userService.authenticate(lukeRank0);
+    try{
+      const epochTemplate = {
+        name: testEpochsJson[0].name,
+        lat: testEpochsJson[0].lat,
+        lng: testEpochsJson[0].lng,
+        countAllVisitors: testEpochsJson[0].countAllVisitors,
+        countCurVisitors: testEpochsJson[0].countCurVisitors,
+        avgRating: testEpochsJson[0].avgRating,
+      };
+      const newEpoch = await epochService.createEpoch(epochTemplate);
+      allEpochs = await epochService.getAllEpochs();
+      assert.equal(allEpochs.length, 1);
+      await epochService.deleteEpoch(newEpoch._id);
+      allEpochs = await epochService.getAllEpochs();
+      assert.equal(allEpochs.length, 0);
+    } catch (error) {
+      assert.fail("Should not be returned - user has the rights to do this since he created the epoch.");
+    }
   });
 
   test("delete one user - fail - missing rights", async () => {

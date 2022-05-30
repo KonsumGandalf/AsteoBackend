@@ -1,5 +1,7 @@
 import { artistsApi } from './api/artist-api.js';
 import { epochsApi } from './api/epoch-api.js';
+import { galleriesApi } from './api/gallery-api.js';
+import { postsApi } from './api/post-api.js';
 import { usersApi } from './api/users-api.js';
 
 export const apiRoutes = [
@@ -21,4 +23,18 @@ export const apiRoutes = [
   { method: "POST", path: "/api/epochs", config: epochsApi.create },
   { method: "DELETE", path: "/api/epochs", config: epochsApi.deleteAll },
   { method: "DELETE", path: "/api/epochs/{id}", config: epochsApi.deleteOne },
+
+  { method: "GET", path: "/api/galleries", config: galleriesApi.findAll },
+  { method: "GET", path: "/api/galleries/{id}", config: galleriesApi.findOne },
+  { method: "POST", path: "/api/galleries", config: galleriesApi.create },
+  { method: "DELETE", path: "/api/galleries", config: galleriesApi.deleteAll },
+  { method: "DELETE", path: "/api/galleries/{id}", config: galleriesApi.deleteOne },
+
+  { method: "GET", path: "/api/posts", config: postsApi.findAll },
+  { method: "GET", path: "/api/galleries/{galleryId}/posts", config: postsApi.findAll },
+  { method: "GET", path: "/api/users/{userId}/posts", config: postsApi.findAll },
+  { method: "GET", path: "/api/posts/{id}", config: postsApi.findOne },
+  { method: "POST", path: "/api/galleries/{galleryId}/posts", config: postsApi.create },
+  { method: "DELETE", path: "/api/posts", config: postsApi.deleteAll },
+  { method: "DELETE", path: "/api/posts/{id}", config: postsApi.deleteOne },
 ];

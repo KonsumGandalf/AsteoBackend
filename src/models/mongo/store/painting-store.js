@@ -2,7 +2,7 @@ import { Painting } from '../schema/painting.js';
 
 export const paintingMongoStore = {
     async getAllPaintings() {
-        return await Painting.find().lean() || null;
+        return await Painting.find().lean() || [];
     },
 
     async getPaintingById(id) {

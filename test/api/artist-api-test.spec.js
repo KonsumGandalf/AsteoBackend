@@ -24,7 +24,6 @@ suite("Artist API tests", () => {
         lastName: testArtistsJson[i].lastName,
         description: testArtistsJson[i].description,
         countPaintings: testArtistsJson[i].countPaintings,
-        user: superUser._id,
       };
       testArtists[i] = await artistService.createArtist(artistTemplate);
     }
@@ -37,7 +36,6 @@ suite("Artist API tests", () => {
       lastName: testArtistsJson[0].lastName,
       description: testArtistsJson[0].description,
       countPaintings: testArtistsJson[0].countPaintings,
-      user: superUser._id,
     };
     const newArtist = await artistService.createArtist(artistTemplate);
     assertSubset(testArtistsJson[0], newArtist);
@@ -77,6 +75,35 @@ suite("Artist API tests", () => {
     } catch (error) {
       assert(error.response.data.message === "Missing rights to delete this user.");
       assert.equal(error.response.data.statusCode, 400);
+    }
+  });
+
+  test("delete one artist - successful - baseUser deletes own object", async () => {
+    // authenticate with superUser
+    await artistService.deleteAllArtists();
+    let allArtists = await artistService.getAllArtists();
+    assert.equal(allArtists.length, 0);
+    await userService.clearAuth();
+    // new authentication with baseUser
+    await userService.createUser(lukeRank0);
+    await userService.authenticate(lukeRank0);
+    try{
+      const artistTemplate = {
+        name: testArtistsJson[0].name,
+        lat: testArtistsJson[0].lat,
+        lng: testArtistsJson[0].lng,
+        countAllVisitors: testArtistsJson[0].countAllVisitors,
+        countCurVisitors: testArtistsJson[0].countCurVisitors,
+        avgRating: testArtistsJson[0].avgRating,
+      };
+      const newArtist = await artistService.createArtist(artistTemplate);
+      allArtists = await artistService.getAllArtists();
+      assert.equal(allArtists.length, 1);
+      await artistService.deleteArtist(newArtist._id);
+      allArtists = await artistService.getAllArtists();
+      assert.equal(allArtists.length, 0);
+    } catch (error) {
+      assert.fail("Should not be returned - user has the rights to do this since he created the artist.");
     }
   });
 

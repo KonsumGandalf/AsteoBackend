@@ -69,7 +69,6 @@ export const artistService = {
 
 export const epochService = {
   async createEpoch(epoch) {
-    console.log(epoch.yearSpan);
     const res = await axios.post(`${serviceUrl}/api/epochs`, epoch);
     return res.data;
   },
@@ -91,6 +90,74 @@ export const epochService = {
 
   async deleteAllEpochs() {
     const res = await axios.delete(`${serviceUrl}/api/epochs`);
+    return res.data;
+  },
+
+};
+
+export const galleryService = {
+  async createGallery(gallery) {
+    console.log(gallery.name);
+    const res = await axios.post(`${serviceUrl}/api/galleries`, gallery);
+    return res.data;
+  },
+
+  async getGallery(id) {
+      const res = await axios.get(`${serviceUrl}/api/galleries/${id}`);
+      return res.data;
+  },
+
+  async getAllGalleries() {
+      const res = await axios.get(`${serviceUrl}/api/galleries`);
+      return res.data;
+  },
+
+  async deleteGallery(id) {
+      const res = await axios.delete(`${serviceUrl}/api/galleries/${id}`);
+      return res.data;
+  },
+
+  async deleteAllGalleries() {
+    const res = await axios.delete(`${serviceUrl}/api/galleries`);
+    return res.data;
+  },
+
+};
+
+export const postService = {
+  async createPost(galleryId, post) {
+    const res = await axios.post(`${serviceUrl}/api/galleries/${galleryId}/posts`, post);
+    return res.data;
+  },
+
+  // PLEASE LOOK FOR ERRORS with the smaller url
+  async getPost(id) {
+    const res = await axios.get(`${serviceUrl}/api/posts/${id}`);
+    return res.data;
+  },
+
+  async getAllPosts() {
+    const res = await axios.get(`${serviceUrl}/api/posts`);
+    return res.data;
+  },
+
+  async getAllPostsByGallery(galleryId) {
+      const res = await axios.get(`${serviceUrl}/api/galleries/${galleryId}/posts`);
+      return res.data;
+  },
+
+  async getAllPostsByUser(userId) {
+    const res = await axios.get(`${serviceUrl}/api/users/${userId}/posts`);
+    return res.data;
+  },
+
+  async deletePost(id) {
+      const res = await axios.delete(`${serviceUrl}/api/posts/${id}`);
+      return res.data;
+  },
+
+  async deleteAllPosts() {
+    const res = await axios.delete(`${serviceUrl}/api/posts`);
     return res.data;
   },
 
