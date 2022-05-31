@@ -8,6 +8,7 @@ const gallerySchema = new Schema({
     lng: String,
     countAllVisitors: Number,
     countCurVisitors: Number,
+    avgRating: Number,
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",

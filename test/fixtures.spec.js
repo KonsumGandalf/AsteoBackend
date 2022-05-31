@@ -90,6 +90,7 @@ export const testGalleriesJson = [
     lng: "4.880563",
     countAllVisitors: 0,
     countCurVisitors: 0,
+    avgRating: 0,
   },
   {
     name: "Rijksmuseum",
@@ -97,12 +98,13 @@ export const testGalleriesJson = [
     lng: "4.884338",
     countAllVisitors: 0,
     countCurVisitors: 0,
+    avgRating: 0,
   },
 ];
 
 export const testPostsJson = [
   {
-    headline: "The artist just had ONE ear!",
+    headline: "The artist just had ONE ear!😯",
     comment: "Very impressive exhibition! The pictures are super presented. Also the curriculum vitae of the artist is well presented.Also very interesting how the pictures are secured",
     time: new Date("2016-05-18T16:00:00Z"),
     rating: 5,

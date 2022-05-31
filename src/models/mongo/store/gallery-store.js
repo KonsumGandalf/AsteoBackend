@@ -2,7 +2,7 @@ import { Gallery } from '../schema/gallery.js';
 
 export const galleryMongoStore = {
     async getAllGalleries() {
-        return await Gallery.find().lean() || null;
+        return await Gallery.find().lean() || [];
     },
 
     async getGalleryById(id) {
@@ -24,7 +24,38 @@ export const galleryMongoStore = {
         return await new Gallery(galleryCreated).save();
     },
 
-    async deleteAll() {
-      await Gallery.deleteMany({});
-    },
+    /**
+  * The deleteMany() returns a document containing the deleteCount field
+  * that stores the number of deleted documents.
+  * @returns {Number}
+  * - n >= 0 for successful deletion
+  * - -1 for missing rights
+  */
+  async deleteAll(user) {
+    if (user.rank > 0) {
+      return await Gallery.deleteMany({});
+    } return -1;
+  },
+
+  /**
+  * This method deletes an entry of the database with the given rank
+  * @param {String} deletionGalleryId
+  * @param {*} user
+  * @returns
+  * - 1 for successful deletion
+  * - 0 for no possible entry
+  * - -1 for missing rights
+  */
+  async deleteGalleryById(deletionGalleryId, user) {
+    try {
+      const gallery = await this.getGalleryById({ _id: deletionGalleryId });
+      if (String(user._id) === String(gallery.user) || user.rank > 0) {
+        await Gallery.deleteOne({ _id: deletionGalleryId });
+        return 1;
+      }
+      return -1;
+    } catch (error) {
+      return 0;
+    }
+  },
 };

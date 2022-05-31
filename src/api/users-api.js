@@ -122,7 +122,6 @@ export const usersApi = {
           }
           return h.response({ success: true, token: createToken(user) }).code(201);
         } catch (err) {
-            console.log("test");
             return Boom.serverUnavailable("Database Error");
         }
       },

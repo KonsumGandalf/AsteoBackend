@@ -2,7 +2,7 @@ import { Artist } from '../schema/artist.js';
 
 export const artistMongoStore = {
     async getAllArtists() {
-        return await Artist.find().lean() || null;
+        return await Artist.find().lean() || [];
     },
 
     async getArtistById(id) {
@@ -49,12 +49,12 @@ export const artistMongoStore = {
   async deleteArtistById(deletionArtistId, user) {
     try {
       const artist = await this.getArtistById({ _id: deletionArtistId });
-      if (artist.user === user || user.rank > 0) {
-        return await Artist.deleteOne({ _id: deletionArtistId });
+      if (String(user._id) === String(artist.user) || user.rank > 0) {
+        await Artist.deleteOne({ _id: deletionArtistId });
+        return 1;
       }
       return -1;
     } catch (error) {
-        console.log("bad id");
         return 0;
     }
   },

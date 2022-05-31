@@ -93,6 +93,7 @@ export const seedData = {
       lng: "4.880563",
       countAllVisitors: 0,
       countCurVisitors: 0,
+      avgRating: 0,
       user: "->users.luke",
     },
     rijksmuseum: {
@@ -101,6 +102,7 @@ export const seedData = {
       lng: "4.884338",
       countAllVisitors: 0,
       countCurVisitors: 0,
+      avgRating: 0,
       user: "->users.vader",
     },
     museuPicasso: {
@@ -109,6 +111,7 @@ export const seedData = {
       lng: "2.1808341153497857",
       countAllVisitors: 0,
       countCurVisitors: 0,
+      avgRating: 0,
       user: "->users.vader",
     },
     louvres: {
@@ -117,6 +120,7 @@ export const seedData = {
       lng: "2.5065192561463028",
       countAllVisitors: 0,
       countCurVisitors: 0,
+      avgRating: 0,
       user: "->users.vader",
     },
   },

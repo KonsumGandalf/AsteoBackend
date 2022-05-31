@@ -2,7 +2,7 @@ import { User } from '../schema/user.js';
 
 export const userMongoStore = {
     async getAllUsers() {
-        return await User.find().lean() || null;
+        return await User.find().lean() || [];
     },
 
     async getUserById(id) {
@@ -50,11 +50,11 @@ export const userMongoStore = {
     async deleteUserById(deletionUserId, user) {
       try {
         if (user.rank > 0) {
-          return await User.deleteOne({ _id: deletionUserId });
+          await User.deleteOne({ _id: deletionUserId });
+          return 1;
         }
         return -1;
       } catch (error) {
-          console.log("bad id");
           return 0;
       }
   },
