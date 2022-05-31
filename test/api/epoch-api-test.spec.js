@@ -4,7 +4,7 @@
 import { assert } from "chai";
 import { userService, epochService, consoleMan } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
-import { vaderRank2, lukeRank0, testEpochsJson } from "../fixtures.spec.js";
+import { vaderRank2, lukeRank0, testEpochsJson, vaderCredentials, lukeCredentials } from "../fixtures.spec.js";
 
 suite("Epoch API tests", () => {
   const testEpochs = [];
@@ -14,7 +14,7 @@ suite("Epoch API tests", () => {
     // reset the current elements
     await userService.clearAuth();
     superUser = await userService.createUser(vaderRank2);
-    await userService.authenticate(vaderRank2);
+    await userService.authenticate(vaderCredentials);
     await epochService.deleteAllEpochs();
 
     for (let i = 0; i < testEpochsJson.length; i += 1) {
@@ -31,10 +31,9 @@ suite("Epoch API tests", () => {
 
   test("create new epoch", async () => {
     const epochTemplate = {
-      firstName: testEpochsJson[0].firstName,
-      lastName: testEpochsJson[0].lastName,
+      name: testEpochsJson[0].name,
       description: testEpochsJson[0].description,
-      countPaintings: testEpochsJson[0].countPaintings,
+      yearSpan: testEpochsJson[0].yearSpan,
     };
     const newEpoch = await epochService.createEpoch(epochTemplate);
     assertSubset(testEpochsJson[0], newEpoch);
@@ -74,15 +73,12 @@ suite("Epoch API tests", () => {
     await userService.clearAuth();
     // new authentication with baseUser
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try{
       const epochTemplate = {
         name: testEpochsJson[0].name,
-        lat: testEpochsJson[0].lat,
-        lng: testEpochsJson[0].lng,
-        countAllVisitors: testEpochsJson[0].countAllVisitors,
-        countCurVisitors: testEpochsJson[0].countCurVisitors,
-        avgRating: testEpochsJson[0].avgRating,
+        description: testEpochsJson[0].description,
+        yearSpan: testEpochsJson[0].yearSpan,
       };
       const newEpoch = await epochService.createEpoch(epochTemplate);
       allEpochs = await epochService.getAllEpochs();
@@ -97,7 +93,7 @@ suite("Epoch API tests", () => {
 
   test("delete one user - fail - missing rights", async () => {
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await userService.deleteUser(superUser._id);
       assert.fail("Should not be returned - user misses the rights to do this");
@@ -109,7 +105,7 @@ suite("Epoch API tests", () => {
 
   test("delete all users - fail - missing rights", async () => {
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await userService.deleteAllUsers();
       assert.fail("Should not be returned - user misses the rights to do this");

@@ -25,6 +25,11 @@ export const vaderCredentials = {
   password: "secret",
 };
 
+export const lukeCredentials = {
+  username: "LukeSkywalker",
+  password: "secret",
+};
+
 export const testUsersJson = [
   {
     firstName: "David",

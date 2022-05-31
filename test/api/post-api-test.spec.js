@@ -7,7 +7,7 @@ import {
 } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
 import {
- vaderRank2, lukeRank0, testPostsJson, testGalleriesJson,
+ vaderRank2, lukeRank0, testPostsJson, testGalleriesJson, vaderCredentials, lukeCredentials
 } from "../fixtures.spec.js";
 
 suite("Post API tests", () => {
@@ -19,7 +19,7 @@ suite("Post API tests", () => {
     // reset the current elements
     await userService.clearAuth();
     superUser = await userService.createUser(vaderRank2);
-    await userService.authenticate(vaderRank2);
+    await userService.authenticate(vaderCredentials);
     await postService.deleteAllPosts();
     testGallery = await galleryService.createGallery(testGalleriesJson[0]);
 
@@ -106,7 +106,7 @@ suite("Post API tests", () => {
     await userService.clearAuth();
     // new authentication with baseUser
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
 
     try {
       const postTemplate = {
@@ -128,7 +128,7 @@ suite("Post API tests", () => {
   test("delete one post - fail - missing rights", async () => {
     await userService.clearAuth();
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await postService.deletePost(testPosts[0]._id);
       assert.fail("Should not be returned - user misses the rights to do this");
@@ -140,7 +140,7 @@ suite("Post API tests", () => {
 
   test("delete all pots - fail - missing rights", async () => {
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await postService.deleteAllPosts();
       assert.fail("Should not be returned - user misses the rights to do this");

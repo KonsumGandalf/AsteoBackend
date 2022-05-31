@@ -24,15 +24,14 @@ export const postMongoStore = {
     */
    async createPost(postCreated) {
      /* space for later improvement
-     console.log("creaiton of post");
     const alreadyCreated = await Post.findOne({
         headline: postCreated.headline,
         gallery: postCreated.gallery,
         user: postCreated.user,
     });
-    console.log(alreadyCreated);
     if (alreadyCreated) return alreadyCreated; */
-    return await new Post(postCreated).save();
+    const post = await new Post(postCreated).save();
+    return await this.getPostById(post._id);
   },
 
   /**

@@ -6,7 +6,7 @@ export const artistMongoStore = {
     },
 
     async getArtistById(id) {
-        const artist = await Artist.findOne({ _id: id }) || null;
+        const artist = await Artist.findOne({ _id: id }).lean() || null;
         return artist;
     },
 
@@ -19,9 +19,10 @@ export const artistMongoStore = {
         const alreadyCreated = await Artist.findOne({
             firstName: artistCreated.firstName,
             lastName: artistCreated.lastName,
-        });
+        }).lean();
         if (alreadyCreated) return alreadyCreated;
-        return await new Artist(artistCreated).save();
+        const artist = await new Artist(artistCreated).save();        
+        return await this.getArtistById(artist._id);
     },
 
   /**
