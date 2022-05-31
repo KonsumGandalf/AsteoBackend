@@ -8,8 +8,8 @@ import {
 import { assertSubset } from "../test-utils.js";
 import {
  vaderRank2, lukeRank0, testPaintingsJson, testGalleriesJson, testEpochsJson, testArtistsJson,
+ vaderCredentials, lukeCredentials,
 } from "../fixtures.spec.js";
-import { galleryMongoStore } from "../../src/models/mongo/store/gallery-store.js";
 
 suite("Painting API tests", () => {
   const testPaintings = [];
@@ -22,7 +22,7 @@ suite("Painting API tests", () => {
     // reset the current elements
     await userService.clearAuth();
     superUser = await userService.createUser(vaderRank2);
-    await userService.authenticate(vaderRank2);
+    await userService.authenticate(vaderCredentials);
     // resetting all referred databases
     await paintingService.deleteAllPaintings();
     assert.equal((await paintingService.getAllPaintings()).length, 0);
@@ -128,7 +128,7 @@ suite("Painting API tests", () => {
     await userService.clearAuth();
     // new authentication with baseUser
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     const paintingTemplate = {
       title: testPaintingsJson[0].title,
       year: testPaintingsJson[0].year,
@@ -148,7 +148,7 @@ suite("Painting API tests", () => {
   test("delete one painting - fail - missing rights", async () => {
     await userService.clearAuth();
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await paintingService.deletePainting(testPaintings[0]._id);
       assert.fail("Should not be returned - user misses the rights to do this");
@@ -160,7 +160,7 @@ suite("Painting API tests", () => {
 
   test("delete all pots - fail - missing rights", async () => {
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await paintingService.deleteAllPaintings();
       assert.fail("Should not be returned - user misses the rights to do this");

@@ -4,7 +4,7 @@
 import { assert } from "chai";
 import { userService } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
-import { vaderRank2, lukeRank0, testUsersJson } from "../fixtures.spec.js";
+import { vaderRank2, lukeRank0, testUsersJson, vaderCredentials, lukeCredentials } from "../fixtures.spec.js";
 
 suite("User API tests", () => {
   let testUsers = [];
@@ -13,14 +13,14 @@ suite("User API tests", () => {
     // assert.equal(userService.playtimeUrl, "http://localhost:4000");
     await userService.clearAuth();
     await userService.createUser(vaderRank2);
-    await userService.authenticate(vaderRank2);
+    await userService.authenticate(vaderCredentials);
     await userService.deleteAllUsers();
     for (let i = 0; i < testUsersJson.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       testUsers[i] = await userService.createUser(testUsersJson[i]);
     }
     await userService.createUser(vaderRank2);
-    await userService.authenticate(vaderRank2);
+    await userService.authenticate(vaderCredentials);
   });
   teardown("Teardown cases", async () => {});
 
@@ -50,7 +50,7 @@ suite("User API tests", () => {
     assert.equal(returnedUsers.length, testUsers.length);
     await userService.deleteAllUsers();
     await userService.createUser(vaderRank2);
-    await userService.authenticate(vaderRank2);
+    await userService.authenticate(vaderCredentials);
     returnedUsers = await userService.getAllUsers();
     assert.equal(returnedUsers.length, 1);
   });
@@ -59,7 +59,7 @@ suite("User API tests", () => {
     const normalUser = await userService.createUser(lukeRank0);
     const superUser = await userService.createUser(vaderRank2);
     await userService.clearAuth();
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await userService.deleteUser(superUser._id);
       assert.fail("Should not be returned - user misses the rights to do this");
@@ -72,7 +72,7 @@ suite("User API tests", () => {
 
   test("delete all users - fail - missing rights", async () => {
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await userService.deleteAllUsers();
       assert.fail("Should not be returned - user misses the rights to do this");

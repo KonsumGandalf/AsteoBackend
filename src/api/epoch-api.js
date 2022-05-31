@@ -1,9 +1,9 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-/* import {
- PlaylistSpec, PlaylistTemplateSpec, IdSpec, ExampleArrays,
-} from "../models/joi-schemas.js"; */
-// import { validationError } from "./logger.js";
+import {
+ EpochDBSpec, EpochTemplateSpec, IdSpec, ExampleArrays,
+} from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const epochsApi = {
   create: {
@@ -18,18 +18,19 @@ export const epochsApi = {
               yearSpan: request.payload.yearSpan,
               user: request.auth.credentials,
             };
-              const epoch = await db.epochStore.createEpoch(epochTemplate);
-              if (epoch) return h.response(epoch).code(201);
-              return Boom.badImplementation("Error creating epoch");
+            const epoch = await db.epochStore.createEpoch(epochTemplate);
+            console.log(epoch);
+            if (epoch) return h.response(epoch).code(201);
+            return Boom.badImplementation("Error creating epoch");
           } catch (err) {
-              return Boom.serverUnavailable("Database Error - Error creating epoch");
+            return Boom.serverUnavailable("Database Error - Error creating epoch");
           }
       },
       tags: ["api", "epoch"],
       description: "Create an epoch",
-      notes: "Returns the created epoch",
-      // validate: { payload: PlaylistTemplateSpec, failAction: validationError },
-      // response: { schema: PlaylistSpec, failAction: validationError },
+      notes: "Creates a new epoch in the DataBase if the name and yearSpan is not already taken.",
+      validate: { payload: EpochTemplateSpec, failAction: validationError },
+      response: { schema: EpochDBSpec, failAction: validationError },
   },
 
   findAll: {
@@ -46,9 +47,9 @@ export const epochsApi = {
       }
     },
     tags: ["api", "epoch"],
-    description: "Get all epochs of the db",
-    notes: "Returns all epochs",
-    // response: { schema: ExampleArrays.PlaylistArray, failAction: validationError },
+    description: "Get all epoch",
+    notes: "Returns all artists of the db",
+    response: { schema: ExampleArrays.EpochArray, failAction: validationError },
     },
 
   findOne: {
@@ -65,10 +66,10 @@ export const epochsApi = {
           }
       },
       tags: ["api", "epoch"],
-      description: "Get the epoch with the given id",
-      notes: "Return one specific epoch",
-      // validate: { params: { id: IdSpec }, failAction: validationError },
-      // response: { schema: PlaylistSpec, failAction: validationError },
+      description: "Get one epoch",
+      notes: "Returns one specific epoch with its ID",
+      validate: { params: { id: IdSpec }, failAction: validationError },
+      response: { schema: EpochDBSpec, failAction: validationError },
   },
 
   deleteOne: {
@@ -89,9 +90,9 @@ export const epochsApi = {
       }
     },
     tags: ["api", "epoch"],
-    description: "Deletes the epoch with the given id",
-    notes: "Returns the deletion success status.",
-    // validate: { params: { id: IdSpec }, failAction: validationError },
+    description: "Deletes an epoch",
+    notes: "Deletes a specific epoch when the command is executed by an Admin (rank of authorized user) or the artist was created by the executing user.",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
@@ -110,5 +111,8 @@ export const epochsApi = {
         return Boom.serverUnavailable("Database Error - No epoch in Database");
       }
     },
+    tags: ["api", "epoch"],
+    description: "Deletes all epochs",
+    notes: "Deletes all epoch when the command is executed by an Admin (rank of authorized user).",
   },
 };

@@ -1,9 +1,9 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-/* import {
- UserRegisterTemplateSpec, UserRegisterSpec, ExampleArrays, IdSpec, AuthSpec, UserLoginSpec
-} from "../models/joi-schemas.js"; */
-// import { validationError } from "./logger.js";
+import {
+ UserLoginSpec, UserRegisterSpec, ExampleArrays, IdSpec, AuthSpec, UserDBSpec,
+} from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 import { createToken } from "./jwt-utils.js";
 
 export const usersApi = {
@@ -12,19 +12,20 @@ export const usersApi = {
     handler: async (request, h) => {
       try {
         const user = await db.userStore.createUser(request.payload);
-          if (user) {
-              return h.response(user).code(201);
-          }
-          return Boom.badImplementation("Error creating user");
+        if (user) {
+          const res = h.response(user).code(201);
+          return res;
+        }
+        return Boom.badImplementation("Error creating user");
       } catch (err) {
-          return Boom.serverUnavailable("Database Error - error creating user");
+        return Boom.serverUnavailable("Database Error - error creating user");
       }
     },
-    tags: ["api"],
-    description: "Create a user",
-    notes: "Returns the created user",
-    /* validate: { payload: UserRegisterTemplateSpec, failAction: validationError },
-    response: { schema: UserRegisterSpec, failAction: validationError }, */
+    tags: ["api", "user"],
+    description: "Creates a new user",
+    notes: "Creates a new user in the DataBase if the username and password is not already taken.",
+    validate: { payload: UserRegisterSpec, failAction: validationError },
+    response: { schema: UserDBSpec, failAction: validationError },
   },
 
   findAll: {
@@ -40,10 +41,10 @@ export const usersApi = {
           return Boom.serverUnavailable("Database Error - No users in the Database");
       }
     },
-    tags: ["api"],
-    description: "Get all users of the db",
-    notes: "Returns all users",
-    // response: { schema: ExampleArrays.UserArray, failAction: validationError },
+    tags: ["api", "user"],
+    description: "Get all users",
+    notes: "Returns all users of the db",
+    response: { schema: ExampleArrays.UserArray, failAction: validationError },
   },
 
   findOne: {
@@ -59,11 +60,11 @@ export const usersApi = {
           return Boom.serverUnavailable("Database Error - No user with the given id");
       }
     },
-    tags: ["api"],
-    description: "Get one user of the db",
-    notes: "Returns one specific users",
-    /* validate: { params: { id: IdSpec }, failAction: validationError },
-    response: { schema: UserRegisterSpec, failAction: validationError }, */
+    tags: ["api", "user"],
+    description: "Get one user",
+    notes: "Returns one specific user with its ID",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: UserDBSpec, failAction: validationError },
   },
 
   deleteOne: {
@@ -83,10 +84,10 @@ export const usersApi = {
           return Boom.serverUnavailable(`Missing rights or Database Error - error deleting the user with id ${request.params.id}`);
       }
     },
-    tags: ["api"],
-    description: "Deletes the user with the given id",
-    notes: "Returns success-condition of the deletion",
-    // validate: { params: { id: IdSpec }, failAction: validationError },
+    tags: ["api", "user"],
+    description: "Deletes a user",
+    notes: "Deletes a specific user when the command is executed by an Admin (rank of authorized user).",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
@@ -105,9 +106,9 @@ export const usersApi = {
           return Boom.serverUnavailable("Database Error - No users in Database");
         }
     },
-    tags: ["api"],
-    description: "Deletes all users of the db",
-    notes: "Returns nothing",
+    tags: ["api", "user"],
+    description: "Deletes all users",
+    notes: "Deletes all users when the command is executed by an Admin (rank of authorized user).",
   },
 
   authenticate: {
@@ -125,10 +126,10 @@ export const usersApi = {
             return Boom.serverUnavailable("Database Error");
         }
       },
-      tags: ["api"],
-      description: "Authenticate a user to have access to the api",
-      notes: "Returns the authenticated user",
-      /* validate: { payload: UserLoginSpec, failAction: validationError },
-      response: { schema: AuthSpec, failAction: validationError }, */
+      tags: ["api", "user"],
+      description: "Authenticate a user",
+      notes: "The User is determines with his rank which of the API commands a later available",
+      validate: { payload: UserLoginSpec, failAction: validationError },
+      response: { schema: AuthSpec, failAction: validationError },
     },
 };

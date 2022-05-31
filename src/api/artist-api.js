@@ -1,9 +1,9 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-/* import {
- PlaylistSpec, PlaylistTemplateSpec, IdSpec, ExampleArrays,
-} from "../models/joi-schemas.js"; */
-// import { validationError } from "./logger.js";
+import {
+  ArtistTemplateSpec, ArtistDBSpec, ExampleArrays, IdSpec, AuthSpec,
+ } from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const artistsApi = {
   create: {
@@ -13,11 +13,11 @@ export const artistsApi = {
       handler: async (request, h) => {
           try {
               const artistTemplate = {
-                  firstName: request.payload.firstName,
-                  lastName: request.payload.lastName,
-                  description: request.payload.description,
-                  countPaintings: request.payload.countPaintings,
-                  user: request.auth.credentials,
+                firstName: request.payload.firstName,
+                lastName: request.payload.lastName,
+                description: request.payload.description,
+                countPaintings: request.payload.countPaintings,
+                user: request.auth.credentials,
               };
               const artist = await db.artistStore.createArtist(artistTemplate);
               if (artist) return h.response(artist).code(201);
@@ -27,10 +27,10 @@ export const artistsApi = {
           }
       },
       tags: ["api", "artist"],
-      description: "Create an artist",
-      notes: "Returns the created artist",
-      // validate: { payload: PlaylistTemplateSpec, failAction: validationError },
-      // response: { schema: PlaylistSpec, failAction: validationError },
+      description: "Creates an artist",
+      notes: "Creates a new user in the DataBase if the firstName and lastName is not already taken.",
+      validate: { payload: ArtistTemplateSpec, failAction: validationError },
+      response: { schema: ArtistDBSpec, failAction: validationError },
   },
 
   findAll: {
@@ -47,9 +47,9 @@ export const artistsApi = {
       }
     },
     tags: ["api", "artist"],
-    description: "Get all artists of the db",
-    notes: "Returns all artists",
-    // response: { schema: ExampleArrays.PlaylistArray, failAction: validationError },
+    description: "Get all artists",
+    notes: "Returns all artists of the db",
+    response: { schema: ExampleArrays.ArtistArray, failAction: validationError },
     },
 
   findOne: {
@@ -66,10 +66,10 @@ export const artistsApi = {
           }
       },
       tags: ["api", "artist"],
-      description: "Get the artist with the given id",
-      notes: "Return one specific artist",
-      // validate: { params: { id: IdSpec }, failAction: validationError },
-      // response: { schema: PlaylistSpec, failAction: validationError },
+      description: "Get one artist",
+      notes: "Returns one specific artist with its ID",
+      validate: { params: { id: IdSpec }, failAction: validationError },
+      response: { schema: ArtistDBSpec, failAction: validationError },
   },
 
   deleteOne: {
@@ -90,9 +90,9 @@ export const artistsApi = {
       }
     },
     tags: ["api", "artist"],
-    description: "Deletes the artist with the given id",
-    notes: "Returns the deletion success status.",
-    // validate: { params: { id: IdSpec }, failAction: validationError },
+    description: "Deletes an artist",
+    notes: "Deletes a specific artist when the command is executed by an Admin (rank of authorized user) or the artist was created by the executing user.",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
@@ -111,5 +111,8 @@ export const artistsApi = {
         return Boom.serverUnavailable("Database Error - No artist in Database");
       }
     },
+    tags: ["api", "artist"],
+    description: "Deletes all artists",
+    notes: "Deletes all artists when the command is executed by an Admin (rank of authorized user).",
   },
 };

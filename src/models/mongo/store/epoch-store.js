@@ -6,7 +6,7 @@ export const epochMongoStore = {
   },
 
   async getEpochById(id) {
-      return await Epoch.findOne({ _id: id }) || null;
+      return await Epoch.findOne({ _id: id }).lean() || null;
   },
 
   /**
@@ -18,9 +18,10 @@ export const epochMongoStore = {
     const alreadyCreated = await Epoch.findOne({
       name: epochCreated.name,
       yearSpan: epochCreated.yearSpan,
-    });
+    }).lean();
     if (alreadyCreated) return alreadyCreated;
-    return await new Epoch(epochCreated).save();
+    const epoch = await new Epoch(epochCreated).save();
+    return await this.getEpochById(epoch._id);
   },
 
   /**

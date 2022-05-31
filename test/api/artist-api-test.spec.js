@@ -4,7 +4,7 @@
 import { assert } from "chai";
 import { userService, artistService } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
-import { vaderRank2, lukeRank0, testArtistsJson } from "../fixtures.spec.js";
+import { vaderRank2, lukeRank0, testArtistsJson, vaderCredentials, lukeCredentials } from "../fixtures.spec.js";
 
 suite("Artist API tests", () => {
   const testArtists = [];
@@ -14,9 +14,9 @@ suite("Artist API tests", () => {
     // reset the current elements
     await userService.clearAuth();
     superUser = await userService.createUser(vaderRank2);
-    await userService.authenticate(vaderRank2);
+    await userService.authenticate(vaderCredentials);
     await artistService.deleteAllArtists();
-
+    
     for (let i = 0; i < testArtistsJson.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       const artistTemplate = {
@@ -68,7 +68,7 @@ suite("Artist API tests", () => {
 
   test("delete one user - fail - missing rights", async () => {
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await userService.deleteUser(superUser._id);
       assert.fail("Should not be returned - user misses the rights to do this");
@@ -86,15 +86,13 @@ suite("Artist API tests", () => {
     await userService.clearAuth();
     // new authentication with baseUser
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try{
       const artistTemplate = {
-        name: testArtistsJson[0].name,
-        lat: testArtistsJson[0].lat,
-        lng: testArtistsJson[0].lng,
-        countAllVisitors: testArtistsJson[0].countAllVisitors,
-        countCurVisitors: testArtistsJson[0].countCurVisitors,
-        avgRating: testArtistsJson[0].avgRating,
+        firstName: testArtistsJson[0].firstName,
+        lastName: testArtistsJson[0].lastName,
+        description: testArtistsJson[0].description,
+        countPaintings: testArtistsJson[0].countPaintings,
       };
       const newArtist = await artistService.createArtist(artistTemplate);
       allArtists = await artistService.getAllArtists();
@@ -109,7 +107,7 @@ suite("Artist API tests", () => {
 
   test("delete all users - fail - missing rights", async () => {
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await userService.deleteAllUsers();
       assert.fail("Should not be returned - user misses the rights to do this");

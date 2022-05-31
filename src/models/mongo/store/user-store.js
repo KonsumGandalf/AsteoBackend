@@ -6,11 +6,11 @@ export const userMongoStore = {
     },
 
     async getUserById(id) {
-        return await User.findOne({ _id: id }) || null;
+        return await User.findOne({ _id: id }).lean() || null;
     },
 
     async getUserByUsername(username) {
-      return await User.findOne({ username: username }) || null;
+      return await User.findOne({ username: username }).lean() || null;
     },
 
     /**
@@ -21,9 +21,12 @@ export const userMongoStore = {
      async createUser(userCreated) {
         const alreadyCreated = await User.findOne({
             username: userCreated.username,
-        });
+        }).lean();
         if (alreadyCreated) return alreadyCreated;
-        return await new User(userCreated).save();
+        if (!userCreated.rank) userCreated.rank = 0;
+        if (!userCreated.countPosting) userCreated.countPosting = 0;
+        const user = await new User(userCreated).save();
+        return await this.getUserById(user._id);
     },
 
     /**

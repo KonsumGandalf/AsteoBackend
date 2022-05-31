@@ -20,8 +20,8 @@ if (result.error) {
 
 const swaggerOptions = {
   info: {
-    title: "CAD Playtime",
-    version: "0.1",
+    title: "Asteo",
+    version: "0.1.15",
   },
   securityDefinitions: {
     jwt: {

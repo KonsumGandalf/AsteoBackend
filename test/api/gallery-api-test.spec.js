@@ -4,7 +4,7 @@
 import { assert } from "chai";
 import { userService, galleryService, consoleMan } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
-import { vaderRank2, lukeRank0, testGalleriesJson } from "../fixtures.spec.js";
+import { vaderRank2, lukeRank0, testGalleriesJson, vaderCredentials, lukeCredentials } from "../fixtures.spec.js";
 
 suite("Gallery API tests", () => {
   const testGalleries = [];
@@ -14,7 +14,7 @@ suite("Gallery API tests", () => {
     // reset the current elements
     await userService.clearAuth();
     superUser = await userService.createUser(vaderRank2);
-    await userService.authenticate(vaderRank2);
+    await userService.authenticate(vaderCredentials);
     await galleryService.deleteAllGalleries();
 
     for (let i = 0; i < testGalleriesJson.length; i += 1) {
@@ -79,7 +79,7 @@ suite("Gallery API tests", () => {
     await userService.clearAuth();
     // new authentication with baseUser
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try{
       const galleryTemplate = {
         name: testGalleriesJson[0].name,
@@ -103,7 +103,7 @@ suite("Gallery API tests", () => {
   test("delete one gallery - fail - missing rights", async () => {
     await userService.clearAuth();
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await galleryService.deleteGallery(testGalleries[0]._id);
       assert.fail("Should not be returned - user misses the rights to do this");
@@ -115,7 +115,7 @@ suite("Gallery API tests", () => {
 
   test("delete all users - fail - missing rights", async () => {
     await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeRank0);
+    await userService.authenticate(lukeCredentials);
     try {
       await userService.deleteAllUsers();
       assert.fail("Should not be returned - user misses the rights to do this");

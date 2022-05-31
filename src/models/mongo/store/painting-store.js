@@ -17,7 +17,7 @@ export const paintingMongoStore = {
         return await Painting.find({ epoch: epoch }).lean() || [];
     },
     async getPaintingById(id) {
-        return await Painting.findOne({ _id: id }) || null;
+        return await Painting.findOne({ _id: id }).lean() || null;
     },
 
     /**
@@ -26,16 +26,15 @@ export const paintingMongoStore = {
     * @param {*} paintingCreated
     */
      async createPainting(paintingCreated) {
-       console.log(`handed over: \n${Object.values(paintingCreated)}`);
         const alreadyCreated = await Painting.findOne({
             title: paintingCreated.title,
             epoch: paintingCreated.epoch._id,
             artist: paintingCreated.artist._id,
             gallery: paintingCreated.gallery._id,
-        });
-        console.log(alreadyCreated);
+        }).lean();
         if (alreadyCreated) return alreadyCreated;
-        return await new Painting(paintingCreated).save();
+        const painting = await new Painting(paintingCreated).save();
+        return await this.getPaintingById(painting._id);
     },
 
     /**
@@ -46,7 +45,6 @@ export const paintingMongoStore = {
   * - -1 for missing rights
   */
    async deleteAll(user) {
-     console.log("deletAll");
    if (user.rank > 0) {
      return await Painting.deleteMany({});
    } return -1;

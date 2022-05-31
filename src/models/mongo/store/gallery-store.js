@@ -6,7 +6,7 @@ export const galleryMongoStore = {
     },
 
     async getGalleryById(id) {
-        return await Gallery.findOne({ _id: id }) || null;
+        return await Gallery.findOne({ _id: id }).lean() || null;
     },
 
     /**
@@ -19,9 +19,10 @@ export const galleryMongoStore = {
             name: galleryCreated.name,
             lat: galleryCreated.lat,
             lng: galleryCreated.lng,
-        });
+        }).lean();
         if (alreadyCreated) return alreadyCreated;
-        return await new Gallery(galleryCreated).save();
+        const gallery = await new Gallery(galleryCreated).save();        
+        return await this.getGalleryById(gallery._id);
     },
 
     /**
