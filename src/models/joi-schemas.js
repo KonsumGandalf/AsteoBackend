@@ -25,7 +25,7 @@ export const UserDBSpec = UserRegisterSpec.keys({
   __v: Joi.number(),
 }).label("User Credentials - In DataBase Syntax");
 
-const UserRef = Joi.alternatives().try(IdSpec, UserDBSpec).description("a valid User ID");
+export const UserRef = Joi.alternatives().try(IdSpec, UserDBSpec).description("a valid User ID");
 
 export const ArtistTemplateSpec = Joi.object().keys({
   firstName: Joi.string().min(3).example("Richard").required(),
@@ -40,7 +40,7 @@ export const ArtistDBSpec = ArtistTemplateSpec.keys({
   __v: Joi.number(),
 }).label("Artist Details - In DataBase Syntax");
 
-const ArtistRef = Joi.alternatives().try(IdSpec, ArtistDBSpec).description("a valid Artist ID");
+export const ArtistRef = Joi.alternatives().try(IdSpec, ArtistDBSpec).description("a valid Artist ID");
 
 export const EpochTemplateSpec = Joi.object().keys({
   name: Joi.string().min(3).example("Cubism").required(),
@@ -54,10 +54,10 @@ export const EpochDBSpec = EpochTemplateSpec.keys({
   __v: Joi.number(),
 }).label("Epoch Details - In DataBase Syntax");
 
-const EpochRef = Joi.alternatives().try(IdSpec, EpochDBSpec).description("a valid Epoch ID");
+export const EpochRef = Joi.alternatives().try(IdSpec, EpochDBSpec).description("a valid Epoch ID");
 
 export const GalleryTemplateSpec = Joi.object().keys({
-  name: Joi.string().min(3).example("Cubism").required(),
+  name: Joi.string().min(3).example("National Gallery").required(),
   lat: Joi.number().example(49.01).required(),
   lng: Joi.number().example(12.10).required(),
   countAllVisitors: Joi.number().example(0).optional(),
@@ -69,13 +69,48 @@ export const GalleryDBSpec = GalleryTemplateSpec.keys({
   user: UserRef,
   _id: IdSpec,
   __v: Joi.number(),
-}).label("Epoch Details - In DataBase Syntax");
+}).label("Gallery Details - In DataBase Syntax");
 
-const GalleryRef = Joi.alternatives().try(IdSpec, GalleryDBSpec).description("a valid Gallery ID");
+export const GalleryRef = Joi.alternatives().try(IdSpec, GalleryDBSpec).description("a valid Gallery ID");
+
+export const PostTemplateSpec = Joi.object().keys({
+  headline: Joi.string().min(4).example("Inspiring!").required(),
+  comment: Joi.string().min(10).example("The collection of art is large and dives deep in the undiscovered ocean of thoughts and meaningfulness.").required(),
+  rating: Joi.number().example(5).required(),
+  gallery: GalleryRef,
+  time: Joi.date().example(new Date()).optional(),
+}).label("Post Details - Handed by the User");
+
+export const PostDBSpec = PostTemplateSpec.keys({
+  user: UserRef,
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("Post Details - In DataBase Syntax");
+
+export const PostRef = Joi.alternatives().try(IdSpec, PostDBSpec).description("a valid Post ID");
+
+export const PaintingTemplateSpec = Joi.object().keys({
+  title: Joi.string().min(3).example("Inspiring!").required(),
+  year: Joi.number().example(1404).required(),
+  price: Joi.number().example(24000000).required(),
+  gallery: GalleryRef,
+  epoch: EpochRef,
+  artist: ArtistRef,
+}).label("Painting Details - Handed by the User");
+
+export const PaintingDBSpec = PaintingTemplateSpec.keys({
+  user: UserRef,
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("Painting Details - In DataBase Syntax");
+
+export const PaintingRef = Joi.alternatives().try(IdSpec, PaintingDBSpec).description("a valid Painting ID");
 
 export const ExampleArrays = {
   UserArray: Joi.array().items(UserDBSpec).label("UserArray"),
   EpochArray: Joi.array().items(EpochDBSpec).label("EpochArray"),
   ArtistArray: Joi.array().items(ArtistDBSpec).label("ArtistArray"),
   GalleryArray: Joi.array().items(GalleryDBSpec).label("GalleryArray"),
+  PostArray: Joi.array().items(PostDBSpec).label("PostArray"),
+  PaintingArray: Joi.array().items(PaintingDBSpec).label("PaintingArray"),
 };

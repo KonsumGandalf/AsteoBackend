@@ -2,7 +2,7 @@
 import { assert } from "chai";
 import { userService } from "./asteo-service.js";
 import { decodeToken } from "../../src/api/jwt-utils.js";
-import { vaderRank2 } from "../fixtures.spec.js";
+import { vaderRank2, vaderCredentials } from "../fixtures.spec.js";
 
 suite("Authentication API tests", async () => {
   setup(async () => {
@@ -27,7 +27,7 @@ suite("Authentication API tests", async () => {
     assert.equal(userInfo.username, returnedUser.username);
     assert.equal(userInfo.userId, returnedUser._id);
   });
-
+  
   test("check unauthorized", async () => {
     userService.clearAuth();
     try {

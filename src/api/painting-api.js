@@ -1,9 +1,10 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-/* import {
- PlaylistSpec, PlaylistTemplateSpec, IdSpec, ExampleArrays,
-} from "../models/joi-schemas.js"; */
-// import { validationError } from "./logger.js";
+import {
+  PaintingDBSpec, PaintingTemplateSpec, IdSpec, ExampleArrays, GalleryRef,
+ EpochRef, ArtistRef
+} from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const paintingsApi = {
   create: {
@@ -38,10 +39,11 @@ export const paintingsApi = {
       }
     },
     tags: ["api", "painting"],
-    description: "Create an painting",
-    notes: "Returns the created painting",
-    // validate: { payload: PlaylistTemplateSpec, failAction: validationError },
-    // response: { schema: PlaylistSpec, failAction: validationError },
+    description: "Create a painting",
+    notes: "Creates a new painting in the DataBase.",
+    // eslint-disable-next-line max-len
+    validate: { payload: PaintingTemplateSpec, failAction: validationError },
+    response: { schema: PaintingDBSpec, failAction: validationError },
   },
   findAll: {
     auth: {
@@ -53,9 +55,6 @@ export const paintingsApi = {
          * & ByArtist & ByAll
          * */
         let paintings;
-        console.log(`gallery ${request.params.galleryId}`);
-        console.log(`artist ${request.params.artistId}`);
-        console.log(`epoch ${request.params.epochId}`);
         if (request.params.galleryId) {
           paintings = await db.paintingStore.getAllPaintingsByGallery(request.params.galleryId);
         } else if (request.params.artistId) {
@@ -65,7 +64,6 @@ export const paintingsApi = {
         } else {
           paintings = await db.paintingStore.getAllPaintings();
         }
-        // console.log(paintings);
         if (paintings) return paintings;
         return Boom.notFound("No paintings in the Database");
       } catch (err) {
@@ -73,9 +71,9 @@ export const paintingsApi = {
       }
     },
     tags: ["api", "painting"],
-    description: "Get all paintings of the db",
-    notes: "Returns all paintings",
-    // response: { schema: ExampleArrays.PlaylistArray, failAction: validationError },
+    description: "Get all paintings",
+    notes: "Returns all posts: \n\t-[galleryId] of one gallery\n\t-[artistId] of one artists\n\t-[epochId] of one epochs\n\t-[else] of the whole db",
+    response: { schema: ExampleArrays.PaintingArray, failAction: validationError },
     },
 
   findOne: {
@@ -92,10 +90,10 @@ export const paintingsApi = {
           }
       },
       tags: ["api", "painting"],
-      description: "Get the painting with the given id",
-      notes: "Return one specific painting",
-      // validate: { params: { id: IdSpec }, failAction: validationError },
-      // response: { schema: PlaylistSpec, failAction: validationError },
+      description: "Get the painting",
+      notes: "Return one specific painting with its ID",
+      validate: { params: { id: IdSpec }, failAction: validationError },
+      response: { schema: PaintingDBSpec, failAction: validationError },
   },
 
   deleteOne: {
@@ -106,7 +104,6 @@ export const paintingsApi = {
       try {
         const requestingUser = request.auth.credentials;
         const success = await db.paintingStore.deletePaintingById(request.params.id, requestingUser);
-        console.log(`success: ${success}`);
         switch (success) {
           case -1: return Boom.badRequest("Missing rights to delete this painting.");
           case 0: return Boom.badImplementation(`No painting with id ${request.params.id} => could not be deleted`);
@@ -117,9 +114,9 @@ export const paintingsApi = {
       }
     },
     tags: ["api", "painting"],
-    description: "Deletes the painting with the given id",
-    notes: "Returns the deletion success status.",
-    // validate: { params: { id: IdSpec }, failAction: validationError },
+    description: "Deletes a painting",
+    notes: "Deletes a specific painting when the command is executed by an Admin (rank of authorized user) or the painting was created by the executing user.",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
@@ -138,5 +135,9 @@ export const paintingsApi = {
         return Boom.serverUnavailable("Database Error - No painting in Database");
       }
     },
+    tags: ["api", "painting"],
+    description: "Deletes all paintings",
+    notes: "Deletes all paintings when the command is executed by an Admin (rank of authorized user).",
+
   },
 };

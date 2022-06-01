@@ -1,9 +1,9 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-/* import {
- PlaylistSpec, PlaylistTemplateSpec, IdSpec, ExampleArrays,
-} from "../models/joi-schemas.js"; */
-// import { validationError } from "./logger.js";
+import {
+ PostDBSpec, PostTemplateSpec, IdSpec, GalleryRef, UserRef, ExampleArrays,
+} from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const postsApi = {
   create: {
@@ -19,12 +19,14 @@ export const postsApi = {
         const postTemplate = {
           headline: request.payload.headline,
           comment: request.payload.comment,
-          time: new Date(),
+          time: request.payload.time,
           rating: request.payload.rating,
           gallery: gallery,
           user: request.auth.credentials,
         };
         const post = await db.postStore.createPost(postTemplate);
+        const res = h.response(post).code(201);
+        console.log(res);
         if (post) return h.response(post).code(201);
         return Boom.badImplementation("Error creating post");
       } catch (err) {
@@ -32,10 +34,10 @@ export const postsApi = {
       }
     },
     tags: ["api", "post"],
-    description: "Create an post",
-    notes: "Returns the created post",
-    // validate: { payload: PlaylistTemplateSpec, failAction: validationError },
-    // response: { schema: PlaylistSpec, failAction: validationError },
+    description: "Creates a post",
+    notes: "Creates a new post in the DataBase.",
+    validate: { payload: PostTemplateSpec, failAction: validationError },
+    response: { schema: PostDBSpec, failAction: validationError },
   },
 
   findAll: {
@@ -60,9 +62,10 @@ export const postsApi = {
       }
     },
     tags: ["api", "post"],
-    description: "Get all posts of the db",
-    notes: "Returns all posts",
-    // response: { schema: ExampleArrays.PlaylistArray, failAction: validationError },
+    description: "Get all posts",
+    notes: "Returns all posts: \n\t-[galleryId] of one gallery\n\t-[userId] of one user\n\t-[else] of the whole db",
+    // validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: ExampleArrays.PostArray, failAction: validationError },
     },
 
   findOne: {
@@ -79,10 +82,10 @@ export const postsApi = {
           }
       },
       tags: ["api", "post"],
-      description: "Get the post with the given id",
-      notes: "Return one specific post",
-      // validate: { params: { id: IdSpec }, failAction: validationError },
-      // response: { schema: PlaylistSpec, failAction: validationError },
+      description: "Get the post",
+      notes: "Return one specific post with its ID",
+      validate: { params: { id: IdSpec }, failAction: validationError },
+      response: { schema: PostDBSpec, failAction: validationError },
   },
 
   deleteOne: {
@@ -103,9 +106,9 @@ export const postsApi = {
       }
     },
     tags: ["api", "post"],
-    description: "Deletes the post with the given id",
-    notes: "Returns the deletion success status.",
-    // validate: { params: { id: IdSpec }, failAction: validationError },
+    description: "Deletes a post",
+    notes: "Deletes a specific post when the command is executed by an Admin (rank of authorized user) or the post was created by the executing user.",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
@@ -124,5 +127,8 @@ export const postsApi = {
         return Boom.serverUnavailable("Database Error - No post in Database");
       }
     },
+    tags: ["api", "post"],
+    description: "Deletes all posts",
+    notes: "Deletes all posts when the command is executed by an Admin (rank of authorized user).",
   },
 };

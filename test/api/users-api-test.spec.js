@@ -23,18 +23,18 @@ suite("User API tests", () => {
     await userService.authenticate(vaderCredentials);
   });
   teardown("Teardown cases", async () => {});
-
+  
   test("create new user", async () => {
-    const newUser = await userService.createUser(vaderRank2);
-    assertSubset(vaderRank2, newUser);
+    const newUser = await userService.createUser(lukeRank0);
+    assertSubset(lukeRank0, newUser);
     assert.isDefined(newUser._id);
   });
-
+  
   test("get a user - success", async () => {
     const newUser = await userService.getUser(testUsers[0]._id);
     assert.deepEqual(testUsers[0], newUser);
   });
-
+  
   test("get a user - bad id", async () => {
     try {
       const newUser = await userService.getUser("2022");
@@ -44,7 +44,7 @@ suite("User API tests", () => {
       assert.equal(error.response.data.statusCode, 503);
     }
   });
-
+  
   test("delete all users - success", async () => {
     let returnedUsers = await userService.getAllUsers();
     assert.equal(returnedUsers.length, testUsers.length);
@@ -54,7 +54,7 @@ suite("User API tests", () => {
     returnedUsers = await userService.getAllUsers();
     assert.equal(returnedUsers.length, 1);
   });
-
+  
   test("delete one user - fail - missing rights", async () => {
     const normalUser = await userService.createUser(lukeRank0);
     const superUser = await userService.createUser(vaderRank2);
