@@ -21,7 +21,7 @@ if (result.error) {
 const swaggerOptions = {
   info: {
     title: "Asteo",
-    version: "0.1.15",
+    version: "1.0.0",
   },
   securityDefinitions: {
     jwt: {
