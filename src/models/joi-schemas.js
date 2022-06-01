@@ -25,7 +25,7 @@ export const UserDBSpec = UserRegisterSpec.keys({
   __v: Joi.number(),
 }).label("User Credentials - In DataBase Syntax");
 
-const UserRef = Joi.alternatives().try(IdSpec, UserDBSpec).description("a valid User ID");
+export const UserRef = Joi.alternatives().try(IdSpec, UserDBSpec).description("a valid User ID");
 
 export const ArtistTemplateSpec = Joi.object().keys({
   firstName: Joi.string().min(3).example("Richard").required(),
@@ -57,7 +57,7 @@ export const EpochDBSpec = EpochTemplateSpec.keys({
 const EpochRef = Joi.alternatives().try(IdSpec, EpochDBSpec).description("a valid Epoch ID");
 
 export const GalleryTemplateSpec = Joi.object().keys({
-  name: Joi.string().min(3).example("Cubism").required(),
+  name: Joi.string().min(3).example("National Gallery").required(),
   lat: Joi.number().example(49.01).required(),
   lng: Joi.number().example(12.10).required(),
   countAllVisitors: Joi.number().example(0).optional(),
@@ -69,13 +69,30 @@ export const GalleryDBSpec = GalleryTemplateSpec.keys({
   user: UserRef,
   _id: IdSpec,
   __v: Joi.number(),
-}).label("Epoch Details - In DataBase Syntax");
+}).label("Gallery Details - In DataBase Syntax");
 
-const GalleryRef = Joi.alternatives().try(IdSpec, GalleryDBSpec).description("a valid Gallery ID");
+export const GalleryRef = Joi.alternatives().try(IdSpec, GalleryDBSpec).description("a valid Gallery ID");
+
+export const PostTemplateSpec = Joi.object().keys({
+  headline: Joi.string().min(4).example("Inspiring!").required(),
+  comment: Joi.string().min(10).example("The collection of art is large and dives deep in the undiscovered ocean of thoughts and meaningfulness.").required(),
+  rating: Joi.number().example(5).required(),
+}).label("Post Details - Handed by the User");
+
+export const PostDBSpec = PostTemplateSpec.keys({
+  time: Joi.date().example(new Date()).optional(),
+  gallery: GalleryRef,
+  user: UserRef,
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("Post Details - In DataBase Syntax");
+
+export const PostRef = Joi.alternatives().try(IdSpec, PostDBSpec).description("a valid Post ID");
 
 export const ExampleArrays = {
   UserArray: Joi.array().items(UserDBSpec).label("UserArray"),
   EpochArray: Joi.array().items(EpochDBSpec).label("EpochArray"),
   ArtistArray: Joi.array().items(ArtistDBSpec).label("ArtistArray"),
   GalleryArray: Joi.array().items(GalleryDBSpec).label("GalleryArray"),
+  PostArray: Joi.array().items(PostDBSpec).label("PostArray"),
 };

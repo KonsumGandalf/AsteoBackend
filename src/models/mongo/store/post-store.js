@@ -14,7 +14,7 @@ export const postMongoStore = {
   },
 
   async getPostById(id) {
-      return await Post.findOne({ _id: id }) || null;
+      return await Post.findOne({ _id: id }).lean() || null;
   },
 
   /**
@@ -30,6 +30,7 @@ export const postMongoStore = {
         user: postCreated.user,
     });
     if (alreadyCreated) return alreadyCreated; */
+    if (!postCreated.time) postCreated.time = new Date();
     const post = await new Post(postCreated).save();
     return await this.getPostById(post._id);
   },

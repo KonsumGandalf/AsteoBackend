@@ -22,6 +22,7 @@ export const galleriesApi = {
           user: request.auth.credentials,
         };
         const gallery = await db.galleryStore.createGallery(galleryTemplate);
+        console.log(gallery);
         if (gallery) return h.response(gallery).code(201);
         return Boom.badImplementation("Error creating gallery");
       } catch (err) {
@@ -29,7 +30,7 @@ export const galleriesApi = {
       }
     },
     tags: ["api", "gallery"],
-    description: "Creates an gallery",
+    description: "Creates a gallery",
     notes: "Creates a new gallery in the DataBase if the name, lat and lng is not already taken.",
     validate: { payload: GalleryTemplateSpec, failAction: validationError },
     response: { schema: GalleryDBSpec, failAction: validationError },
@@ -50,7 +51,7 @@ export const galleriesApi = {
     },
     tags: ["api", "gallery"],
     description: "Get all galleries",
-    notes: "Returns all galleries",
+    notes: "Returns all galleries of the db",
     response: { schema: ExampleArrays.GalleryArray, failAction: validationError },
     },
 
@@ -68,8 +69,8 @@ export const galleriesApi = {
           }
       },
       tags: ["api", "gallery"],
-      description: "Get the gallery with the given id",
-      notes: "Return one specific gallery",
+      description: "Get a gallery",
+      notes: "Return one specific galery with its ID",
       validate: { params: { id: IdSpec }, failAction: validationError },
       response: { schema: GalleryDBSpec, failAction: validationError },
   },
@@ -92,8 +93,8 @@ export const galleriesApi = {
       }
     },
     tags: ["api", "gallery"],
-    description: "Deletes the gallery with the given id",
-    notes: "Returns the deletion success status.",
+    description: "Deletes a gallery",
+    notes: "Deletes a specific gallery when the command is executed by an Admin (rank of authorized user) or the gallery was created by the executing user.",
     validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
