@@ -4,8 +4,8 @@ const { Schema } = Mongoose;
 
 const gallerySchema = new Schema({
     name: String,
-    lat: String,
-    lng: String,
+    lat: Number,
+    lng: Number,
     countAllVisitors: Number,
     countCurVisitors: Number,
     avgRating: Number,

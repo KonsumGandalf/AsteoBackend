@@ -1,9 +1,9 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-/* import {
- PlaylistSpec, PlaylistTemplateSpec, IdSpec, ExampleArrays,
-} from "../models/joi-schemas.js"; */
-// import { validationError } from "./logger.js";
+import {
+ GalleryDBSpec, GalleryTemplateSpec, IdSpec, ExampleArrays,
+} from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const galleriesApi = {
   create: {
@@ -16,9 +16,9 @@ export const galleriesApi = {
           name: request.payload.name,
           lat: request.payload.lat,
           lng: request.payload.lng,
-          countAllVisitors: 0,
-          countCurVisitors: 0,
-          avgRating: 0,
+          countAllVisitors: request.payload.countAllVisitors,
+          countCurVisitors: request.payload.countCurVisitors,
+          avgRating: request.payload.avgRating,
           user: request.auth.credentials,
         };
         const gallery = await db.galleryStore.createGallery(galleryTemplate);
@@ -29,10 +29,10 @@ export const galleriesApi = {
       }
     },
     tags: ["api", "gallery"],
-    description: "Create an gallery",
-    notes: "Returns the created gallery",
-    // validate: { payload: PlaylistTemplateSpec, failAction: validationError },
-    // response: { schema: PlaylistSpec, failAction: validationError },
+    description: "Creates an gallery",
+    notes: "Creates a new gallery in the DataBase if the name, lat and lng is not already taken.",
+    validate: { payload: GalleryTemplateSpec, failAction: validationError },
+    response: { schema: GalleryDBSpec, failAction: validationError },
   },
 
   findAll: {
@@ -49,9 +49,9 @@ export const galleriesApi = {
       }
     },
     tags: ["api", "gallery"],
-    description: "Get all galleries of the db",
+    description: "Get all galleries",
     notes: "Returns all galleries",
-    // response: { schema: ExampleArrays.PlaylistArray, failAction: validationError },
+    response: { schema: ExampleArrays.GalleryArray, failAction: validationError },
     },
 
   findOne: {
@@ -70,8 +70,8 @@ export const galleriesApi = {
       tags: ["api", "gallery"],
       description: "Get the gallery with the given id",
       notes: "Return one specific gallery",
-      // validate: { params: { id: IdSpec }, failAction: validationError },
-      // response: { schema: PlaylistSpec, failAction: validationError },
+      validate: { params: { id: IdSpec }, failAction: validationError },
+      response: { schema: GalleryDBSpec, failAction: validationError },
   },
 
   deleteOne: {
@@ -94,7 +94,7 @@ export const galleriesApi = {
     tags: ["api", "gallery"],
     description: "Deletes the gallery with the given id",
     notes: "Returns the deletion success status.",
-    // validate: { params: { id: IdSpec }, failAction: validationError },
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
@@ -113,5 +113,9 @@ export const galleriesApi = {
         return Boom.serverUnavailable("Database Error - No gallery in Database");
       }
     },
+    tags: ["api", "gallery"],
+    description: "Deletes all galleries",
+    notes: "Deletes all galleries when the command is executed by an Admin (rank of authorized user).",
+
   },
 };

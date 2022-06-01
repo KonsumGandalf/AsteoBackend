@@ -19,7 +19,6 @@ export const epochsApi = {
               user: request.auth.credentials,
             };
             const epoch = await db.epochStore.createEpoch(epochTemplate);
-            console.log(epoch);
             if (epoch) return h.response(epoch).code(201);
             return Boom.badImplementation("Error creating epoch");
           } catch (err) {
@@ -27,7 +26,7 @@ export const epochsApi = {
           }
       },
       tags: ["api", "epoch"],
-      description: "Create an epoch",
+      description: "Creates an epoch",
       notes: "Creates a new epoch in the DataBase if the name and yearSpan is not already taken.",
       validate: { payload: EpochTemplateSpec, failAction: validationError },
       response: { schema: EpochDBSpec, failAction: validationError },
@@ -113,6 +112,6 @@ export const epochsApi = {
     },
     tags: ["api", "epoch"],
     description: "Deletes all epochs",
-    notes: "Deletes all epoch when the command is executed by an Admin (rank of authorized user).",
+    notes: "Deletes all epochs when the command is executed by an Admin (rank of authorized user).",
   },
 };
