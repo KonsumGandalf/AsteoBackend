@@ -21,6 +21,9 @@ export const galleryMongoStore = {
             lng: galleryCreated.lng,
         }).lean();
         if (alreadyCreated) return alreadyCreated;
+        if (!galleryCreated.countAllVisitors) galleryCreated.countAllVisitors = 0;
+        if (!galleryCreated.countCurVisitors) galleryCreated.countCurVisitors = 0;
+        if (!galleryCreated.avgRating) galleryCreated.avgRating = 0;
         const gallery = await new Gallery(galleryCreated).save();        
         return await this.getGalleryById(gallery._id);
     },

@@ -89,8 +89,8 @@ export const seedData = {
     _model: "Gallery",
     vanGoghMuseum: {
       name: "Van Gogh Museum",
-      lat: "52.358353",
-      lng: "4.880563",
+      lat: 52.358353,
+      lng: 4.880563,
       countAllVisitors: 0,
       countCurVisitors: 0,
       avgRating: 0,
@@ -98,8 +98,8 @@ export const seedData = {
     },
     rijksmuseum: {
       name: "Rijksmuseum",
-      lat: "52.359438",
-      lng: "4.884338",
+      lat: 52.359438,
+      lng: 4.884338,
       countAllVisitors: 0,
       countCurVisitors: 0,
       avgRating: 0,
@@ -107,8 +107,8 @@ export const seedData = {
     },
     museuPicasso: {
       name: "MuseuPicasso",
-      lat: "41.38519420306767",
-      lng: "2.1808341153497857",
+      lat: 41.3851942030676,
+      lng: 2.1808341153497857,
       countAllVisitors: 0,
       countCurVisitors: 0,
       avgRating: 0,
@@ -116,8 +116,8 @@ export const seedData = {
     },
     louvres: {
       name: "Louvres",
-      lat: "49.04295293064281",
-      lng: "2.5065192561463028",
+      lat: 49.04295293064281,
+      lng: 2.5065192561463028,
       countAllVisitors: 0,
       countCurVisitors: 0,
       avgRating: 0,
