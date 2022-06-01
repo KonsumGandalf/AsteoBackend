@@ -1,6 +1,6 @@
 {
   "name": "asteobackend",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "This Project should host an api with a function mongo db to administrate a map of museums",
   "main": "src/server.js",
   "type": "module",
