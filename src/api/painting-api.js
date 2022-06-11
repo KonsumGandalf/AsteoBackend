@@ -27,6 +27,7 @@ export const paintingsApi = {
           gallery: gallery,
           epoch: epoch,
           artist: artist,
+          image: request.payload.image,
           user: request.auth.credentials,
         };
         console.log(paintingTemplate);

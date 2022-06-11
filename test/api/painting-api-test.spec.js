@@ -43,6 +43,7 @@ suite("Painting API tests", () => {
         epoch: testEpoch._id,
         artist: testArtist._id,
         gallery: testGallery._id,
+        image: testPaintingsJson[i].image,
       };
       testPaintings[i] = await paintingService.createPainting(paintingTemplate);
     }
@@ -59,6 +60,7 @@ suite("Painting API tests", () => {
       epoch: testEpoch._id,
       artist: testArtist._id,
       gallery: testGallery._id,
+      image: testPaintingsJson[0].image,
     };
     const newPainting = await paintingService.createPainting(paintingTemplate);
     assertSubset(testPaintingsJson[0], newPainting);
@@ -86,6 +88,7 @@ suite("Painting API tests", () => {
         epoch: testEpoch2._id,
         artist: testArtist2._id,
         gallery: testGallery2._id,
+        image: testPaintingsJson[i].image,
       };
       const u = await paintingService.createPainting(paintingTemplate);
     }
@@ -136,6 +139,7 @@ suite("Painting API tests", () => {
       epoch: testEpoch,
       artist: testArtist,
       gallery: testGallery,
+      image: testPaintingsJson[0].image,
     };
     const newPainting = await paintingService.createPainting(paintingTemplate);
     allPaintings = await paintingService.getAllPaintings();

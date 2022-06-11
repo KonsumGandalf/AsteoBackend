@@ -5,6 +5,7 @@ export const IdSpec = Joi.alternatives().try(Joi.string(), Joi.object()).descrip
 export const AuthSpec = Joi.object().keys({
   success: Joi.boolean().example("true").required(),
   token: Joi.string().example("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9").required(),
+  _id: IdSpec.optional(),
 }).label("Auth Details");
 
 export const UserLoginSpec = Joi.object().keys({
@@ -32,6 +33,7 @@ export const ArtistTemplateSpec = Joi.object().keys({
   lastName: Joi.string().min(3).example(" Prince").required(),
   description: Joi.string().min(3).example("Your artwork is now mine :) Thanks.").required(),
   countPaintings: Joi.number(),
+  image: Joi.string().example("https://de.wikipedia.org/wiki/Vincent_van_Gogh#/media/Datei:Van_Gogh_Self-Portrait_with_Straw_Hat_1887-Metropolitan.jpg").required(),
 }).label("Artist Details - Handed by the User");
 
 export const ArtistDBSpec = ArtistTemplateSpec.keys({
@@ -46,6 +48,7 @@ export const EpochTemplateSpec = Joi.object().keys({
   name: Joi.string().min(3).example("Cubism").required(),
   description: Joi.string().min(3).example("The Epoch was focused on abstract forms and shapes.").required(),
   yearSpan: Joi.string().min(3).example("1950-1980").required(),
+  image: Joi.string().example("https://de.wikipedia.org/wiki/Vincent_van_Gogh#/media/Datei:Van_Gogh_Self-Portrait_with_Straw_Hat_1887-Metropolitan.jpg").required(),
 }).label("Epoch Details - Handed by the User");
 
 export const EpochDBSpec = EpochTemplateSpec.keys({
@@ -96,6 +99,7 @@ export const PaintingTemplateSpec = Joi.object().keys({
   gallery: GalleryRef,
   epoch: EpochRef,
   artist: ArtistRef,
+  image: Joi.string().example("https://de.wikipedia.org/wiki/Vincent_van_Gogh#/media/Datei:Van_Gogh_Self-Portrait_with_Straw_Hat_1887-Metropolitan.jpg").required(),
 }).label("Painting Details - Handed by the User");
 
 export const PaintingDBSpec = PaintingTemplateSpec.keys({

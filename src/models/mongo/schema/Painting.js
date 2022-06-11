@@ -6,6 +6,7 @@ const paintingSchema = new Schema({
     title: String,
     year: Number,
     price: Number,
+    image: String,
     epoch: {
         type: Schema.Types.ObjectId,
         ref: "Epoch",

@@ -4,7 +4,9 @@
 import { assert } from "chai";
 import { userService, artistService } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
-import { vaderRank2, lukeRank0, testArtistsJson, vaderCredentials, lukeCredentials } from "../fixtures.spec.js";
+import {
+ vaderRank2, lukeRank0, testArtistsJson, vaderCredentials, lukeCredentials,
+} from "../fixtures.spec.js";
 
 suite("Artist API tests", () => {
   const testArtists = [];
@@ -16,7 +18,7 @@ suite("Artist API tests", () => {
     superUser = await userService.createUser(vaderRank2);
     await userService.authenticate(vaderCredentials);
     await artistService.deleteAllArtists();
-    
+
     for (let i = 0; i < testArtistsJson.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       const artistTemplate = {
@@ -24,6 +26,7 @@ suite("Artist API tests", () => {
         lastName: testArtistsJson[i].lastName,
         description: testArtistsJson[i].description,
         countPaintings: testArtistsJson[i].countPaintings,
+        image: testArtistsJson[i].image,
       };
       testArtists[i] = await artistService.createArtist(artistTemplate);
     }
@@ -36,6 +39,7 @@ suite("Artist API tests", () => {
       lastName: testArtistsJson[0].lastName,
       description: testArtistsJson[0].description,
       countPaintings: testArtistsJson[0].countPaintings,
+      image: testArtistsJson[0].image,
     };
     const newArtist = await artistService.createArtist(artistTemplate);
     assertSubset(testArtistsJson[0], newArtist);
@@ -87,12 +91,13 @@ suite("Artist API tests", () => {
     // new authentication with baseUser
     await userService.createUser(lukeRank0);
     await userService.authenticate(lukeCredentials);
-    try{
+    try {
       const artistTemplate = {
         firstName: testArtistsJson[0].firstName,
         lastName: testArtistsJson[0].lastName,
         description: testArtistsJson[0].description,
         countPaintings: testArtistsJson[0].countPaintings,
+        image: testArtistsJson[0].image,
       };
       const newArtist = await artistService.createArtist(artistTemplate);
       allArtists = await artistService.getAllArtists();

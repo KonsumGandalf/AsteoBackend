@@ -17,6 +17,7 @@ export const artistsApi = {
                 lastName: request.payload.lastName,
                 description: request.payload.description,
                 countPaintings: request.payload.countPaintings,
+                image: request.payload.image,
                 user: request.auth.credentials,
               };
               const artist = await db.artistStore.createArtist(artistTemplate);

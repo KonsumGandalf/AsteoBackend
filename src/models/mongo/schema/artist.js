@@ -7,6 +7,7 @@ const artistSchema = new Schema({
     lastName: String,
     description: String,
     countPaintings: Number,
+    image: String,
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",

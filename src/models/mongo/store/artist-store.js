@@ -21,7 +21,7 @@ export const artistMongoStore = {
             lastName: artistCreated.lastName,
         }).lean();
         if (alreadyCreated) return alreadyCreated;
-        const artist = await new Artist(artistCreated).save();        
+        const artist = await new Artist(artistCreated).save();
         return await this.getArtistById(artist._id);
     },
 
