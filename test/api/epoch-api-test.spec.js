@@ -23,6 +23,7 @@ suite("Epoch API tests", () => {
         name: testEpochsJson[i].name,
         description: testEpochsJson[i].description,
         yearSpan: testEpochsJson[i].yearSpan,
+        image: testEpochsJson[i].image,
       };
       testEpochs[i] = await epochService.createEpoch(epochTemplate);
     }
@@ -34,6 +35,7 @@ suite("Epoch API tests", () => {
       name: testEpochsJson[0].name,
       description: testEpochsJson[0].description,
       yearSpan: testEpochsJson[0].yearSpan,
+      image: testEpochsJson[0].image,
     };
     const newEpoch = await epochService.createEpoch(epochTemplate);
     assertSubset(testEpochsJson[0], newEpoch);
@@ -79,6 +81,7 @@ suite("Epoch API tests", () => {
         name: testEpochsJson[0].name,
         description: testEpochsJson[0].description,
         yearSpan: testEpochsJson[0].yearSpan,
+        image: testEpochsJson[0].image,
       };
       const newEpoch = await epochService.createEpoch(epochTemplate);
       allEpochs = await epochService.getAllEpochs();

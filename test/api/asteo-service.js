@@ -168,7 +168,7 @@ export const paintingService = {
     return res.data;
   },
 
-  // PLEASE LOOK FOR ERRORS with the smaller url
+  // PLEASE LOOK FOR ERRORS with the shorter url
   async getPainting(id) {
     const res = await axios.get(`${serviceUrl}/api/paintings/${id}`);
     return res.data;

@@ -4,10 +4,13 @@
 import { assert } from "chai";
 import { userService } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
-import { vaderRank2, lukeRank0, testUsersJson, vaderCredentials, lukeCredentials } from "../fixtures.spec.js";
+import {
+ vaderRank2, lukeRank0, testUsersJson, vaderCredentials, lukeCredentials,
+} from "../fixtures.spec.js";
 
 suite("User API tests", () => {
-  let testUsers = [];
+  const testUsers = [];
+  let superUser;
 
   setup("Initializes the use", async () => {
     // assert.equal(userService.playtimeUrl, "http://localhost:4000");
@@ -19,22 +22,22 @@ suite("User API tests", () => {
       // eslint-disable-next-line no-await-in-loop
       testUsers[i] = await userService.createUser(testUsersJson[i]);
     }
-    await userService.createUser(vaderRank2);
+    superUser = await userService.createUser(vaderRank2);
     await userService.authenticate(vaderCredentials);
   });
   teardown("Teardown cases", async () => {});
-  
+
   test("create new user", async () => {
     const newUser = await userService.createUser(lukeRank0);
     assertSubset(lukeRank0, newUser);
     assert.isDefined(newUser._id);
   });
-  
-  test("get a user - success", async () => {
+
+  test("get a user by Id - success", async () => {
     const newUser = await userService.getUser(testUsers[0]._id);
     assert.deepEqual(testUsers[0], newUser);
   });
-  
+
   test("get a user - bad id", async () => {
     try {
       const newUser = await userService.getUser("2022");
@@ -44,7 +47,7 @@ suite("User API tests", () => {
       assert.equal(error.response.data.statusCode, 503);
     }
   });
-  
+
   test("delete all users - success", async () => {
     let returnedUsers = await userService.getAllUsers();
     assert.equal(returnedUsers.length, testUsers.length);
@@ -54,10 +57,10 @@ suite("User API tests", () => {
     returnedUsers = await userService.getAllUsers();
     assert.equal(returnedUsers.length, 1);
   });
-  
+
   test("delete one user - fail - missing rights", async () => {
-    const normalUser = await userService.createUser(lukeRank0);
-    const superUser = await userService.createUser(vaderRank2);
+    await userService.createUser(lukeRank0);
+    await userService.createUser(vaderRank2);
     await userService.clearAuth();
     await userService.authenticate(lukeCredentials);
     try {
@@ -68,6 +71,14 @@ suite("User API tests", () => {
       assert.equal(error.response.data.statusCode, 400);
       assert.equal(1, 1);
     }
+  });
+
+  test("delete one user - success - by Id", async () => {
+    const delUser = await userService.createUser(lukeRank0);
+    const allUsers = await userService.getAllUsers();
+    await userService.deleteUser(delUser._id);
+    const allUsers2 = await userService.getAllUsers();
+    assert.equal(allUsers.length, allUsers2.length + 1);
   });
 
   test("delete all users - fail - missing rights", async () => {

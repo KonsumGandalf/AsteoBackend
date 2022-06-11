@@ -36,6 +36,7 @@ const swaggerOptions = {
 async function init() {
   const server = Hapi.server({
     port: process.env.port,
+    routes: { cors: true },
   });
   // later : implement auth strategies
 

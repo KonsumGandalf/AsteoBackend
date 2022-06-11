@@ -16,6 +16,7 @@ export const epochsApi = {
               name: request.payload.name,
               description: request.payload.description,
               yearSpan: request.payload.yearSpan,
+              image: request.payload.image,
               user: request.auth.credentials,
             };
             const epoch = await db.epochStore.createEpoch(epochTemplate);

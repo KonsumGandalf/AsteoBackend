@@ -6,6 +6,7 @@ const epochSchema = new Schema({
     name: String,
     description: String,
     yearSpan: String,
+    image: String,
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",
