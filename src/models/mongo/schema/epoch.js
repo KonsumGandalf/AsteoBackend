@@ -1,16 +1,16 @@
-import Mongoose from 'mongoose';
+import Mongoose from "mongoose";
 
 const { Schema } = Mongoose;
 
 const epochSchema = new Schema({
-    name: String,
-    description: String,
-    yearSpan: String,
-    image: String,
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-    },
+  name: String,
+  description: String,
+  yearSpan: String,
+  image: String,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 export const Epoch = Mongoose.model("Epoch", epochSchema);

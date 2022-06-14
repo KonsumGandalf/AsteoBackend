@@ -7,7 +7,12 @@ import {
 } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
 import {
- vaderRank2, lukeRank0, testPostsJson, testGalleriesJson, vaderCredentials, lukeCredentials
+  vaderRank2,
+  lukeRank0,
+  testPostsJson,
+  testGalleriesJson,
+  vaderCredentials,
+  lukeCredentials,
 } from "../fixtures.spec.js";
 
 suite("Post API tests", () => {
@@ -32,7 +37,7 @@ suite("Post API tests", () => {
         time: testPostsJson[i].time,
         user ...
         */
-       rating: testPostsJson[i].rating,
+        rating: testPostsJson[i].rating,
       };
       testPosts[i] = await postService.createPost(testGallery._id, postTemplate);
     }

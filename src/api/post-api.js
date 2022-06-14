@@ -1,14 +1,14 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
 import {
- PostDBSpec, PostTemplateSpec, IdSpec, GalleryRef, UserRef, ExampleArrays,
+ PostDBSpec, PostTemplateSpec, IdSpec, ExampleArrays,
 } from "../models/joi-schemas.js";
 import { validationError } from "./logger.js";
 
 export const postsApi = {
   create: {
     auth: {
-        strategy: "jwt",
+      strategy: "jwt",
     },
     handler: async (request, h) => {
       try {
@@ -30,7 +30,7 @@ export const postsApi = {
         if (post) return h.response(post).code(201);
         return Boom.badImplementation("Error creating post");
       } catch (err) {
-          return Boom.serverUnavailable("Database Error - Error creating post");
+        return Boom.serverUnavailable("Database Error - Error creating post");
       }
     },
     tags: ["api", "post"],
@@ -42,7 +42,7 @@ export const postsApi = {
 
   findAll: {
     auth: {
-        strategy: "jwt",
+      strategy: "jwt",
     },
     handler: async (request) => {
       try {
@@ -58,7 +58,7 @@ export const postsApi = {
         if (posts) return posts;
         return Boom.notFound("No posts in the Database");
       } catch (err) {
-          return Boom.serverUnavailable("Database Error - No posts in the Database");
+        return Boom.serverUnavailable("Database Error - No posts in the Database");
       }
     },
     tags: ["api", "post"],
@@ -66,48 +66,55 @@ export const postsApi = {
     notes: "Returns all posts: \n\t-[galleryId] of one gallery\n\t-[userId] of one user\n\t-[else] of the whole db",
     // validate: { params: { id: IdSpec }, failAction: validationError },
     response: { schema: ExampleArrays.PostArray, failAction: validationError },
-    },
+  },
 
   findOne: {
-      auth: {
-          strategy: "jwt",
-      },
-      handler: async (request) => {
-          try {
-            const post = await db.postStore.getPostById(request.params.id);
-            if (!post) return Boom.notFound("No post with the given id");
-            return post;
-          } catch (err) {
-              return Boom.serverUnavailable("Database Error - No post with the given id");
-          }
-      },
-      tags: ["api", "post"],
-      description: "Get the post",
-      notes: "Return one specific post with its ID",
-      validate: { params: { id: IdSpec }, failAction: validationError },
-      response: { schema: PostDBSpec, failAction: validationError },
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async (request) => {
+      try {
+        const post = await db.postStore.getPostById(request.params.id);
+        if (!post) return Boom.notFound("No post with the given id");
+        return post;
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error - No post with the given id");
+      }
+    },
+    tags: ["api", "post"],
+    description: "Get the post",
+    notes: "Return one specific post with its ID",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: PostDBSpec, failAction: validationError },
   },
 
   deleteOne: {
     auth: {
-        strategy: "jwt",
+      strategy: "jwt",
     },
     handler: async (request, h) => {
       try {
         const requestingUser = request.auth.credentials;
         const success = await db.postStore.deletePostById(request.params.id, requestingUser);
         switch (success) {
-          case -1: return Boom.badRequest("Missing rights to delete this post.");
-          case 0: return Boom.badImplementation(`No post with id ${request.params.id} => could not be deleted`);
-          default: return h.response(success).code(204);
+          case -1:
+            return Boom.badRequest("Missing rights to delete this post.");
+          case 0:
+            return Boom.badImplementation(`No post with id ${request.params.id} => could not be deleted`);
+          default:
+            return h.response(success).code(204);
         }
       } catch (err) {
-          return Boom.serverUnavailable(`Database Error - No playlist with the id  ${request.params.id} => could not be deleted`);
+        return Boom.serverUnavailable(
+          `Database Error - No playlist with the id  ${request.params.id} => could not be deleted`,
+        );
       }
     },
     tags: ["api", "post"],
     description: "Deletes a post",
-    notes: "Deletes a specific post when the command is executed by an Admin (rank of authorized user) or the post was created by the executing user.",
+    notes:
+      "Deletes a specific post when the command is executed by an \
+      Admin (rank of authorized user) or the post was created by the executing user.",
     validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
@@ -120,8 +127,10 @@ export const postsApi = {
         const requestingUser = request.auth.credentials;
         const success = await db.postStore.deleteAll(requestingUser);
         switch (success) {
-          case -1: return Boom.badRequest("Missing right to delete all posts.");
-          default: return h.response(success).code(204);
+          case -1:
+            return Boom.badRequest("Missing right to delete all posts.");
+          default:
+            return h.response(success).code(204);
         }
       } catch (err) {
         return Boom.serverUnavailable("Database Error - No post in Database");

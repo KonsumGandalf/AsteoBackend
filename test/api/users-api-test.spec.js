@@ -33,6 +33,16 @@ suite("User API tests", () => {
     assert.isDefined(newUser._id);
   });
 
+  test("update an existing user", async () => {
+    const newUser = await userService.createUser(lukeRank0);
+    assertSubset(lukeRank0, newUser);
+    newUser.username = "SupiSkywalker";
+    newUser.rank = 1;
+    const updatedUser = await userService.updateUser(newUser);
+    assertSubset(lukeRank0, updatedUser);
+    assert.equal(updatedUser.rank, 1);
+  });
+
   test("get a user by Id - success", async () => {
     const newUser = await userService.getUser(testUsers[0]._id);
     assert.deepEqual(testUsers[0], newUser);

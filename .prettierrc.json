@@ -3,5 +3,11 @@
   "tabWidth": 2,
   "semi": true,
   "singleQuote": false,
-  "printWidth": 180
+  "max-line-length": [
+    true, 
+   { 
+       "limit": 120, 
+       "ignore-pattern": "^import |^export {(.*?)}" 
+   }
+  ]
 }
