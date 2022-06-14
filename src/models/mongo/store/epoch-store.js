@@ -1,12 +1,12 @@
-import { Epoch } from "../schema/epoch.js";
+import { Epoch } from '../schema/epoch.js';
 
 export const epochMongoStore = {
   async getAllEpochs() {
-    return (await Epoch.find().lean()) || [];
+      return await Epoch.find().lean() || [];
   },
 
   async getEpochById(id) {
-    return (await Epoch.findOne({ _id: id }).lean()) || null;
+      return await Epoch.findOne({ _id: id }).lean() || null;
   },
 
   /**
@@ -25,28 +25,27 @@ export const epochMongoStore = {
   },
 
   /**
-   * The deleteMany() returns a document containing the deleteCount field
-   * that stores the number of deleted documents.
-   * @returns {Number}
-   * - n >= 0 for successful deletion
-   * - -1 for missing rights
-   */
+  * The deleteMany() returns a document containing the deleteCount field
+  * that stores the number of deleted documents.
+  * @returns {Number}
+  * - n >= 0 for successful deletion
+  * - -1 for missing rights
+  */
   async deleteAll(user) {
     if (user.rank > 0) {
       return await Epoch.deleteMany({});
-    }
-    return -1;
+    } return -1;
   },
 
   /**
-   * This method deletes an entry of the database with the given rank
-   * @param {String} deletionEpochId
-   * @param {*} user
-   * @returns
-   * - 1 for successful deletion
-   * - 0 for no possible entry
-   * - -1 for missing rights
-   */
+  * This method deletes an entry of the database with the given rank
+  * @param {String} deletionEpochId
+  * @param {*} user
+  * @returns
+  * - 1 for successful deletion
+  * - 0 for no possible entry
+  * - -1 for missing rights
+  */
   async deleteEpochById(deletionEpochId, user) {
     try {
       const epoch = await this.getEpochById({ _id: deletionEpochId });

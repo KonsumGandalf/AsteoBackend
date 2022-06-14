@@ -8,11 +8,7 @@ export function assertSubset(subset, superset) {
     if (!superset.propertyIsEnumerable(key)) return false;
     const subsetItem = subset[key];
     const supersetItem = superset[key];
-    if (
-      typeof subsetItem === "object" && subsetItem !== null
-        ? !assertSubset(supersetItem, subsetItem)
-        : supersetItem !== subsetItem
-    ) return false;
+    if (typeof subsetItem === "object" && subsetItem !== null ? !assertSubset(supersetItem, subsetItem) : supersetItem !== subsetItem) return false;
 
     return true;
   });

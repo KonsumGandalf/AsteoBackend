@@ -3,27 +3,17 @@
 /* eslint-disable no-await-in-loop */
 import { assert } from "chai";
 import {
-  userService,
-  paintingService,
-  consoleMan,
-  galleryService,
-  epochService,
-  artistService,
+ userService, paintingService, consoleMan, galleryService, epochService, artistService,
 } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
 import {
-  vaderRank2,
-  lukeRank0,
-  testPaintingsJson,
-  testGalleriesJson,
-  testEpochsJson,
-  testArtistsJson,
-  vaderCredentials,
-  lukeCredentials,
+ vaderRank2, lukeRank0, testPaintingsJson, testGalleriesJson, testEpochsJson, testArtistsJson,
+ vaderCredentials, lukeCredentials,
 } from "../fixtures.spec.js";
 
 suite("Painting API tests", () => {
   const testPaintings = [];
+  let superUser;
   let testEpoch;
   let testArtist;
   let testGallery;
@@ -31,7 +21,7 @@ suite("Painting API tests", () => {
   setup("Initializes the use", async () => {
     // reset the current elements
     await userService.clearAuth();
-    await userService.createUser(vaderRank2);
+    superUser = await userService.createUser(vaderRank2);
     await userService.authenticate(vaderCredentials);
     // resetting all referred databases
     await paintingService.deleteAllPaintings();
@@ -100,7 +90,7 @@ suite("Painting API tests", () => {
         gallery: testGallery2._id,
         image: testPaintingsJson[i].image,
       };
-      await paintingService.createPainting(paintingTemplate);
+      const u = await paintingService.createPainting(paintingTemplate);
     }
     const allPaintings = await paintingService.getAllPaintings();
     assert.equal(allPaintings.length, 6);

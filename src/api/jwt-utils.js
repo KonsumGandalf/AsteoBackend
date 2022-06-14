@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { db } from "../models/db.js";
 
-dotenv.config();
+const result = dotenv.config();
 
 export function createToken(user) {
   const payload = {
@@ -28,8 +28,7 @@ export function decodeToken(token) {
   return userInfo;
 }
 
-export async function validate(decoded) {
-  // request
+export async function validate(decoded, request) {
   const user = await db.userStore.getUserById(decoded.id);
   if (!user) {
     return { isValid: false };
