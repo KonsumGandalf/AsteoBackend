@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { assert } from "chai";
 import { userService } from "./asteo-service.js";
-// import { decodeToken } from "../../src/api/jwt-utils.js";
+import { decodeToken } from "../../src/api/jwt-utils.js";
 import { vaderRank2, vaderCredentials } from "../fixtures.spec.js";
 
 suite("Authentication API tests", async () => {

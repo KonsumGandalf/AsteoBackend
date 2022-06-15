@@ -18,6 +18,7 @@ export const galleriesApi = {
           lng: request.payload.lng,
           countAllVisitors: request.payload.countAllVisitors,
           countCurVisitors: request.payload.countCurVisitors,
+          avgRating: request.payload.avgRating,
           user: request.auth.credentials,
         };
         const gallery = await db.galleryStore.createGallery(galleryTemplate);

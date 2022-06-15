@@ -25,6 +25,7 @@ suite("Artist API tests", () => {
         firstName: testArtistsJson[i].firstName,
         lastName: testArtistsJson[i].lastName,
         description: testArtistsJson[i].description,
+        countPaintings: testArtistsJson[i].countPaintings,
         image: testArtistsJson[i].image,
       };
       testArtists[i] = await artistService.createArtist(artistTemplate);
@@ -37,6 +38,7 @@ suite("Artist API tests", () => {
       firstName: testArtistsJson[0].firstName,
       lastName: testArtistsJson[0].lastName,
       description: testArtistsJson[0].description,
+      countPaintings: testArtistsJson[0].countPaintings,
       image: testArtistsJson[0].image,
     };
     const newArtist = await artistService.createArtist(artistTemplate);
@@ -94,6 +96,7 @@ suite("Artist API tests", () => {
         firstName: testArtistsJson[0].firstName,
         lastName: testArtistsJson[0].lastName,
         description: testArtistsJson[0].description,
+        countPaintings: testArtistsJson[0].countPaintings,
         image: testArtistsJson[0].image,
       };
       const newArtist = await artistService.createArtist(artistTemplate);
