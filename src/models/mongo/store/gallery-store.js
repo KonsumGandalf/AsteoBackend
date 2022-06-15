@@ -1,13 +1,14 @@
-import { Gallery } from "../schema/gallery.js";
+import { Gallery } from '../schema/gallery.js';
 
 export const galleryMongoStore = {
-  async getAllGalleries() {
-    return (await Gallery.find().lean()) || [];
-  },
+    async getAllGalleries() {
+        return await Gallery.find().lean() || [];
+    },
 
-  async getGalleryById(id) {
-    return (await Gallery.findOne({ _id: id }).lean()) || null;
-  },
+    async getGalleryById(id) {
+        return await Gallery.findOne({ _id: id }).lean() || null;
+    },
+
 
   /**
    * This method allows to create an gallery, but checks first if the specified parameters
@@ -27,52 +28,29 @@ export const galleryMongoStore = {
     return await this.getGalleryById(gallery._id);
   },
 
-  /**
-   * The deleteMany() returns a document containing the deleteCount field
-   * that stores the number of deleted documents.
-   * @returns {Number}
-   * - n >= 0 for successful deletion
-   * - -1 for missing rights
-   */
+
+    /**
+  * The deleteMany() returns a document containing the deleteCount field
+  * that stores the number of deleted documents.
+  * @returns {Number}
+  * - n >= 0 for successful deletion
+  * - -1 for missing rights
+  */
   async deleteAll(user) {
     if (user.rank > 0) {
       return await Gallery.deleteMany({});
-    }
-    return -1;
-  },
-
-  async checkIn(id) {
-    const gallery = await this.getGalleryById(id);
-    await Gallery.updateOne(
-      { _id: gallery._id },
-      {
-        $set: {
-          countAllVisitors: gallery.countAllVisitors + 1,
-          countCurVisitors: gallery.countCurVisitors + 1,
-        },
-      },
-    );
-    return 1;
-  },
-
-  async checkOut(id) {
-    const gallery = await this.getGalleryById(id);
-    if (gallery.countCurVisitors > 0) {
-      await Gallery.updateOne({ _id: gallery._id }, { $set: { countCurVisitors: gallery.countCurVisitors - 1 } });
-      return 1;
-    }
-    return -1;
+    } return -1;
   },
 
   /**
-   * This method deletes an entry of the database with the given rank
-   * @param {String} deletionGalleryId
-   * @param {*} user
-   * @returns
-   * - 1 for successful deletion
-   * - 0 for no possible entry
-   * - -1 for missing rights
-   */
+  * This method deletes an entry of the database with the given rank
+  * @param {String} deletionGalleryId
+  * @param {*} user
+  * @returns
+  * - 1 for successful deletion
+  * - 0 for no possible entry
+  * - -1 for missing rights
+  */
   async deleteGalleryById(deletionGalleryId, user) {
     try {
       const gallery = await this.getGalleryById({ _id: deletionGalleryId });

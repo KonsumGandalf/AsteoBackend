@@ -22,10 +22,6 @@
         "linebreak-style": "off",
         "no-param-reassign": "off",
         "import/no-unresolved": "off",
-        "no-return-await": "off",
-        "function-paren-newline": "off",
-        "no-multi-str": "off",
-        "func-names": "off",
-        "max-len": ["error", { "code": 120 }]
+        "no-return-await": "off"
     }
 }

@@ -4,17 +4,16 @@
 import { assert } from "chai";
 import { userService, galleryService, consoleMan } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
-import {
- vaderRank2, lukeRank0, testGalleriesJson, vaderCredentials, lukeCredentials,
-} from "../fixtures.spec.js";
+import { vaderRank2, lukeRank0, testGalleriesJson, vaderCredentials, lukeCredentials } from "../fixtures.spec.js";
 
 suite("Gallery API tests", () => {
   const testGalleries = [];
+  let superUser;
 
   setup("Initializes the use", async () => {
     // reset the current elements
     await userService.clearAuth();
-    await userService.createUser(vaderRank2);
+    superUser = await userService.createUser(vaderRank2);
     await userService.authenticate(vaderCredentials);
     await galleryService.deleteAllGalleries();
 
@@ -43,18 +42,6 @@ suite("Gallery API tests", () => {
     const newGallery = await galleryService.createGallery(galleryTemplate);
     assertSubset(testGalleriesJson[0], newGallery);
     assert.isDefined(newGallery._id);
-  });
-
-  test("checkIn and Out a created gallery", async () => {
-    assert.equal(testGalleries[0].countAllVisitors, testGalleriesJson[0].countAllVisitors);
-    await galleryService.checkIn(testGalleries[0]._id);
-    testGalleries[0] = await galleryService.getGallery(testGalleries[0]._id);
-    assert.equal(testGalleries[0].countAllVisitors, testGalleriesJson[0].countAllVisitors + 1);
-    assert.equal(testGalleries[0].countCurVisitors, testGalleriesJson[0].countCurVisitors + 1);
-    await galleryService.checkOut(testGalleries[0]._id);
-    testGalleries[0] = await galleryService.getGallery(testGalleries[0]._id);
-    assert.equal(testGalleries[0].countAllVisitors, testGalleriesJson[0].countAllVisitors + 1);
-    assert.equal(testGalleries[0].countCurVisitors, testGalleriesJson[0].countCurVisitors);
   });
 
   test("get an gallery - success", async () => {
@@ -91,7 +78,7 @@ suite("Gallery API tests", () => {
     // new authentication with baseUser
     await userService.createUser(lukeRank0);
     await userService.authenticate(lukeCredentials);
-    try {
+    try{
       const galleryTemplate = {
         name: testGalleriesJson[0].name,
         lat: testGalleriesJson[0].lat,

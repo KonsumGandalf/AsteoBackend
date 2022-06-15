@@ -1,14 +1,15 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
 import {
- PaintingDBSpec, PaintingTemplateSpec, IdSpec, ExampleArrays,
+  PaintingDBSpec, PaintingTemplateSpec, IdSpec, ExampleArrays, GalleryRef,
+ EpochRef, ArtistRef
 } from "../models/joi-schemas.js";
 import { validationError } from "./logger.js";
 
 export const paintingsApi = {
   create: {
     auth: {
-      strategy: "jwt",
+        strategy: "jwt",
     },
     handler: async (request, h) => {
       try {
@@ -35,7 +36,7 @@ export const paintingsApi = {
         if (painting) return h.response(painting).code(201);
         return Boom.badImplementation("Error creating painting");
       } catch (err) {
-        return Boom.serverUnavailable("Database Error - Error creating painting");
+          return Boom.serverUnavailable("Database Error - Error creating painting");
       }
     },
     tags: ["api", "painting"],
@@ -47,7 +48,7 @@ export const paintingsApi = {
   },
   findAll: {
     auth: {
-      strategy: "jwt",
+        strategy: "jwt",
     },
     handler: async (request) => {
       try {
@@ -67,64 +68,55 @@ export const paintingsApi = {
         if (paintings) return paintings;
         return Boom.notFound("No paintings in the Database");
       } catch (err) {
-        return Boom.serverUnavailable("Database Error - No paintings in the Database");
+          return Boom.serverUnavailable("Database Error - No paintings in the Database");
       }
     },
     tags: ["api", "painting"],
     description: "Get all paintings",
-    notes:
-      "Returns all posts: \n\t-[galleryId] of one gallery\n\t-[artistId] \
-      of one artists\n\t-[epochId] of one epochs\n\t-[else] of the whole db",
+    notes: "Returns all posts: \n\t-[galleryId] of one gallery\n\t-[artistId] of one artists\n\t-[epochId] of one epochs\n\t-[else] of the whole db",
     response: { schema: ExampleArrays.PaintingArray, failAction: validationError },
-  },
+    },
 
   findOne: {
-    auth: {
-      strategy: "jwt",
-    },
-    handler: async (request) => {
-      try {
-        const painting = await db.paintingStore.getPaintingById(request.params.id);
-        if (!painting) return Boom.notFound("No painting with the given id");
-        return painting;
-      } catch (err) {
-        return Boom.serverUnavailable("Database Error - No painting with the given id");
-      }
-    },
-    tags: ["api", "painting"],
-    description: "Get the painting",
-    notes: "Return one specific painting with its ID",
-    validate: { params: { id: IdSpec }, failAction: validationError },
-    response: { schema: PaintingDBSpec, failAction: validationError },
+      auth: {
+          strategy: "jwt",
+      },
+      handler: async (request) => {
+          try {
+            const painting = await db.paintingStore.getPaintingById(request.params.id);
+            if (!painting) return Boom.notFound("No painting with the given id");
+            return painting;
+          } catch (err) {
+              return Boom.serverUnavailable("Database Error - No painting with the given id");
+          }
+      },
+      tags: ["api", "painting"],
+      description: "Get the painting",
+      notes: "Return one specific painting with its ID",
+      validate: { params: { id: IdSpec }, failAction: validationError },
+      response: { schema: PaintingDBSpec, failAction: validationError },
   },
 
   deleteOne: {
     auth: {
-      strategy: "jwt",
+        strategy: "jwt",
     },
     handler: async (request, h) => {
       try {
         const requestingUser = request.auth.credentials;
         const success = await db.paintingStore.deletePaintingById(request.params.id, requestingUser);
         switch (success) {
-          case -1:
-            return Boom.badRequest("Missing rights to delete this painting.");
-          case 0:
-            return Boom.badImplementation(`No painting with id ${request.params.id} => could not be deleted`);
-          default:
-            return h.response(success).code(204);
+          case -1: return Boom.badRequest("Missing rights to delete this painting.");
+          case 0: return Boom.badImplementation(`No painting with id ${request.params.id} => could not be deleted`);
+          default: return h.response(success).code(204);
         }
       } catch (err) {
-        return Boom.serverUnavailable(
-          `Database Error - No playlist with the id  ${request.params.id} => could not be deleted`,
-        );
+          return Boom.serverUnavailable(`Database Error - No playlist with the id  ${request.params.id} => could not be deleted`);
       }
     },
     tags: ["api", "painting"],
     description: "Deletes a painting",
-    notes:
-      "Deletes a specific painting when the command is executed by an Admin\
-       (rank of authorized user) or the painting was created by the executing user.",
+    notes: "Deletes a specific painting when the command is executed by an Admin (rank of authorized user) or the painting was created by the executing user.",
     validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
@@ -137,10 +129,8 @@ export const paintingsApi = {
         const requestingUser = request.auth.credentials;
         const success = await db.paintingStore.deleteAll(requestingUser);
         switch (success) {
-          case -1:
-            return Boom.badRequest("Missing right to delete all paintings.");
-          default:
-            return h.response(success).code(204);
+          case -1: return Boom.badRequest("Missing right to delete all paintings.");
+          default: return h.response(success).code(204);
         }
       } catch (err) {
         return Boom.serverUnavailable("Database Error - No painting in Database");
@@ -149,5 +139,6 @@ export const paintingsApi = {
     tags: ["api", "painting"],
     description: "Deletes all paintings",
     notes: "Deletes all paintings when the command is executed by an Admin (rank of authorized user).",
+
   },
 };
