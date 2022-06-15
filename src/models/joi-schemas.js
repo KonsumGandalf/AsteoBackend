@@ -32,8 +32,8 @@ export const ArtistTemplateSpec = Joi.object().keys({
   firstName: Joi.string().min(3).example("Richard").required(),
   lastName: Joi.string().min(3).example(" Prince").required(),
   description: Joi.string().min(3).example("Your artwork is now mine :) Thanks.").required(),
-  countPaintings: Joi.number(),
-  image: Joi.string().example("https://de.wikipedia.org/wiki/Vincent_van_Gogh#/media/Datei:Van_Gogh_Self-Portrait_with_Straw_Hat_1887-Metropolitan.jpg").required(),
+  image: Joi.string().example("https://de.wikipedia.org/wiki/Vincent_van_Gogh#/\
+  media/Datei:Van_Gogh_Self-Portrait_with_Straw_Hat_1887-Metropolitan.jpg").required(),
 }).label("Artist Details - Handed by the User");
 
 export const ArtistDBSpec = ArtistTemplateSpec.keys({
@@ -65,8 +65,7 @@ export const GalleryTemplateSpec = Joi.object().keys({
   lng: Joi.number().example(12.10).required(),
   countAllVisitors: Joi.number().example(0).optional(),
   countCurVisitors: Joi.number().example(0).optional(),
-  avgRating: Joi.number().optional(4.2),
-}).label("Gallery Details - Handed by the User");
+}).("Gallery Details - Handed by the User");
 
 export const GalleryDBSpec = GalleryTemplateSpec.keys({
   user: UserRef,

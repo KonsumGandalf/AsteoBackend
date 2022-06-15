@@ -65,14 +65,12 @@ export const testArtistsJson = [
     firstName: "Vincent",
     lastName: "van Gogh",
     description: "Vincent van Gogh was a Dutch painter, generally considered to be the greatest after Rembrandt van Rijn, and one of the greatest of the PostImpressionists. He sold only one artwork during his life, but in the century after his death he became perhaps the most recognized painter of all time.",
-    countPaintings: 20,
     image: "https://de.wikipedia.org/wiki/Vincent_van_Gogh#/media/Datei:Van_Gogh_Self-Portrait_with_Straw_Hat_1887-Metropolitan.jpg",
   },
   {
     firstName: "Leonardo",
     lastName: "da Vinci",
     description: "Leonardo da Vinci was an artist and engineer who is best known for his paintings, notably the Mona Lisa (c. 1503–19) and the Last Supper (1495–98). His drawing of the Vitruvian Man (c. 1490) has also become a cultural icon. Leonardo is sometimes credited as the inventor of the tank, helicopter, parachute, and flying machine, among other vehicles and devices, but later scholarship has disputed such claims. Nonetheless, Leonardo's notebooks reveal a sharp intellect, and his contributions to art, including methods of representing space, threedimensional objects, and the human figure, cannot be overstated.",
-    countPaintings: 5,
     image: "https://img.br.de/99371165-1480-494a-96fa-200ef051058c.jpeg?width=210&q=85",
   },
 ];
@@ -99,7 +97,6 @@ export const testGalleriesJson = [
     lng: "4.880563",
     countAllVisitors: 0,
     countCurVisitors: 0,
-    avgRating: 0,
   },
   {
     name: "Rijksmuseum",
@@ -107,7 +104,6 @@ export const testGalleriesJson = [
     lng: "4.884338",
     countAllVisitors: 0,
     countCurVisitors: 0,
-    avgRating: 0,
   },
 ];
 
