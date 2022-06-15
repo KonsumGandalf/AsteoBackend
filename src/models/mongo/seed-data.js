@@ -82,48 +82,37 @@ export const seedData = {
     vanGogh: {
       firstName: "Vincent",
       lastName: "van Gogh",
-      description:
-        "Vincent van Gogh was a Dutch painter, generally considered to be the greatest after Rembrandt van Rijn, and one of the greatest of the PostImpressionists. He sold only one artwork during his life, but in the century after his death he became perhaps the most recognized painter of all time.",
-      countPaintings: 20,
-      image: "https://image.geo.de/30044996/t/80/v3/w1440/r0/-/vincent-van-gogh-gross-jpg--18879-.jpg",
+      description: "Vincent van Gogh was a Dutch painter, generally considered to be the greatest after Rembrandt van Rijn, and one of the greatest of the PostImpressionists. He sold only one artwork during his life, but in the century after his death he became perhaps the most recognized painter of all time.",
+      image: "https://image.geo.de/30044996/t/qU/v3/w1440/r1.5/-/vincent-van-gogh-gross-jpg--18879-.jpg",
       user: "->users.luke",
     },
     daVinci: {
       firstName: "Leonardo",
       lastName: "da Vinci",
-      description:
-        "Leonardo da Vinci was an artist and engineer who is best known for his paintings, notably the Mona Lisa (c. 1503–19) and the Last Supper (1495–98). His drawing of the Vitruvian Man (c. 1490) has also become a cultural icon. Leonardo is sometimes credited as the inventor of the tank, helicopter, parachute, and flying machine, among other vehicles and devices, but later scholarship has disputed such claims. Nonetheless, Leonardo's notebooks reveal a sharp intellect, and his contributions to art, including methods of representing space, threedimensional objects, and the human figure, cannot be overstated.",
-      countPaintings: 5,
+      description: "Leonardo da Vinci was an artist and engineer who is best known for his paintings, notably the Mona Lisa (c. 1503–19) and the Last Supper (1495–98). His drawing of the Vitruvian Man (c. 1490) has also become a cultural icon. Leonardo is sometimes credited as the inventor of the tank, helicopter, parachute, and flying machine, among other vehicles and devices, but later scholarship has disputed such claims. Nonetheless, Leonardo's notebooks reveal a sharp intellect, and his contributions to art, including methods of representing space, threedimensional objects, and the human figure, cannot be overstated.",
       image: "https://img.br.de/99371165-1480-494a-96fa-200ef051058c.jpeg?width=210&q=85",
       user: "->users.luke",
     },
     picasso: {
       firstName: "Pablo",
       lastName: "Picasso",
-      description:
-        "Pablo Picasso, in full Pablo Diego José Francisco de Paula Juan Nepomuceno Crispín Crispiniano María Remedios de la Santísima Trinidad Ruiz Picasso, also called (before 1901) Pablo Ruiz or Pablo Ruiz Picasso, (born October 25, 1881, Málaga, Spain—died April 8, 1973, Mougins, France), Spanish expatriate painter, sculptor, printmaker, ceramicist, and stage designer, one of the greatest and mostinfluential artists of the 20th century and the creator (with Georges Braque) of Cubism. (For more information on Picasso's name see Researcher's Note: Picasso's full name. The enormous body of Picasso's work remains, and the legend lives on—a tribute to the vitality of the “disquieting” Spaniard with the “sombre…piercing” eyes who superstitiously believed that work would keep him alive. For nearly 80 of his 91 years, Picasso devoted himself to an artistic production that contributed significantly to and paralleled the whole development of modern art in the 20th century.",
-      countPaintings: 5,
+      description: "Pablo Picasso, in full Pablo Diego José Francisco de Paula Juan Nepomuceno Crispín Crispiniano María Remedios de la Santísima Trinidad Ruiz Picasso, also called (before 1901) Pablo Ruiz or Pablo Ruiz Picasso, (born October 25, 1881, Málaga, Spain—died April 8, 1973, Mougins, France), Spanish expatriate painter, sculptor, printmaker, ceramicist, and stage designer, one of the greatest and mostinfluential artists of the 20th century and the creator (with Georges Braque) of Cubism. (For more information on Picasso's name see Researcher's Note: Picasso's full name. The enormous body of Picasso's work remains, and the legend lives on—a tribute to the vitality of the “disquieting” Spaniard with the “sombre…piercing” eyes who superstitiously believed that work would keep him alive. For nearly 80 of his 91 years, Picasso devoted himself to an artistic production that contributed significantly to and paralleled the whole development of modern art in the 20th century.",
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Pablo_picasso_1.jpg/513px-Pablo_picasso_1.jpg",
       user: "->users.luke",
     },
     rembrandt: {
       firstName: "Rembrandt",
       lastName: "Harmenszoon van Rijn",
-      description:
-        "Rembrandt, in full Rembrandt Harmenszoon van Rijn, Rembrandt originally spelled Rembrant, (born July 15, 1606, Leiden, Netherlands—died October 4, 1669, Amsterdam), Dutch Baroque painter and printmaker, one of the greatest storytellers in the history of art, possessing an exceptional ability to render people in their various moods and dramatic guises. Rembrandt is also known as a painter of light and shade and as an artist who favoured an uncompromising realism that would lead some critics to claim that he preferred ugliness to beauty. Early in his career and for some time, Rembrandt painted mainly portraits. Although he continued to paint—and etch and, occasionally, draw—portraits throughout his career, he did so less frequently over time. Roughly one-tenth of his painted and etched oeuvre consists of studies of his own face as well as more-formal self-portraits, a fact that has led to much speculation.",
-      countPaintings: 5,
-      image:
-        "https://2ho4f5klzmi1xz49c18txd0p-wpengine.netdna-ssl.com/wp-content/uploads/cache/images/ARTat-Berlin-Der-Mann-mit-dem-Goldhelm-Rembrandt-bzw-seinem-Kreis-zugeschrieben/ARTat-Berlin-Der-Mann-mit-dem-Goldhelm-Rembrandt-bzw-seinem-Kreis-zugeschrieben-2047744970.jpg",
+      description: "Rembrandt, in full Rembrandt Harmenszoon van Rijn, Rembrandt originally spelled Rembrant, (born July 15, 1606, Leiden, Netherlands—died October 4, 1669, Amsterdam), Dutch Baroque painter and printmaker, one of the greatest storytellers in the history of art, possessing an exceptional ability to render people in their various moods and dramatic guises. Rembrandt is also known as a painter of light and shade and as an artist who favoured an uncompromising realism that would lead some critics to claim that he preferred ugliness to beauty. Early in his career and for some time, Rembrandt painted mainly portraits. Although he continued to paint—and etch and, occasionally, draw—portraits throughout his career, he did so less frequently over time. Roughly one-tenth of his painted and etched oeuvre consists of studies of his own face as well as more-formal self-portraits, a fact that has led to much speculation.",
+      image: "https://2ho4f5klzmi1xz49c18txd0p-wpengine.netdna-ssl.com/wp-content/uploads/cache/images/ARTat-Berlin-Der-Mann-mit-dem-Goldhelm-Rembrandt-bzw-seinem-Kreis-zugeschrieben/ARTat-Berlin-Der-Mann-mit-dem-Goldhelm-Rembrandt-bzw-seinem-Kreis-zugeschrieben-2047744970.jpg",
       user: "->users.vader",
     },
     monet: {
       firstName: "Oscar-Claude",
       lastName: "Monet",
-      description:
-        "Claude Monet is a French painter known for his significant contribution to the Impressionist art movement. Born in Paris on November 14, 1840, he spent his childhood in the city of Havre (Normandy) where his family moved when he was five years old. Monet developed his passion over time, starting with caricature and then, encouraged by his father, painting, which he studied in Paris in 1859 at the Swiss Academy. Monet’s military service in Algeria in 1861 cut short his studies but he nonetheless continued to experiment with different artistic forms. Forced to return to Paris in 1862 following an illness he contracted (pleurisy), Monet met the Swiss painter Charles Gleyre and also worked with Alfred Sisley, Auguste Renoir and Frédéric Basille who all become his close friends.",
-      countPaintings: 1840,
+      description: "Claude Monet is a French painter known for his significant contribution to the Impressionist art movement. Born in Paris on November 14, 1840, he spent his childhood in the city of Havre (Normandy) where his family moved when he was five years old. Monet developed his passion over time, starting with caricature and then, encouraged by his father, painting, which he studied in Paris in 1859 at the Swiss Academy. Monet’s military service in Algeria in 1861 cut short his studies but he nonetheless continued to experiment with different artistic forms. Forced to return to Paris in 1862 following an illness he contracted (pleurisy), Monet met the Swiss painter Charles Gleyre and also worked with Alfred Sisley, Auguste Renoir and Frédéric Basille who all become his close friends.",
       image: "https://cdn.pariscityvision.com/library/image/5094.jpg",
-      user: "->users.vader",
+      user: "->users.paintingGandalf",
     },
   },
   epochs: {

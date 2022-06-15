@@ -36,21 +36,13 @@ export const UserDBSpec = UserRegisterSpec.keys({
 
 export const UserRef = Joi.alternatives().try(IdSpec, UserDBSpec).description("a valid User ID");
 
-export const ArtistTemplateSpec = Joi.object()
-  .keys({
-    firstName: Joi.string().min(3).example("Richard").required(),
-    lastName: Joi.string().min(3).example(" Prince").required(),
-    description: Joi.string().min(3).example("Your artwork is now mine :) Thanks.").required(),
-    countPaintings: Joi.number(),
-    image: Joi.string()
-      .min(3)
-      .example(
-        "https://de.wikipedia.org/wiki/Vincent_van_Gogh#/media/Datei:Van_Gogh_Self-Portrait\
-        _with_Straw_Hat_1887-Metropolitan.jpg",
-      )
-      .required(),
-  })
-  .label("Artist Details - Handed by the User");
+export const ArtistTemplateSpec = Joi.object().keys({
+  firstName: Joi.string().min(3).example("Richard").required(),
+  lastName: Joi.string().min(3).example(" Prince").required(),
+  description: Joi.string().min(3).example("Your artwork is now mine :) Thanks.").required(),
+  image: Joi.string().example("https://de.wikipedia.org/wiki/Vincent_van_Gogh#/\
+  media/Datei:Van_Gogh_Self-Portrait_with_Straw_Hat_1887-Metropolitan.jpg").required(),
+}).label("Artist Details - Handed by the User");
 
 export const ArtistDBSpec = ArtistTemplateSpec.keys({
   user: UserRef,
@@ -83,16 +75,13 @@ export const EpochDBSpec = EpochTemplateSpec.keys({
 
 export const EpochRef = Joi.alternatives().try(IdSpec, EpochDBSpec).description("a valid Epoch ID");
 
-export const GalleryTemplateSpec = Joi.object()
-  .keys({
-    name: Joi.string().min(3).example("National Gallery").required(),
-    lat: Joi.number().example(49.01).required(),
-    lng: Joi.number().example(12.1).required(),
-    countAllVisitors: Joi.number().example(0).optional(),
-    countCurVisitors: Joi.number().example(0).optional(),
-    avgRating: Joi.number().optional(4.2),
-  })
-  .label("Gallery Details - Handed by the User");
+export const GalleryTemplateSpec = Joi.object().keys({
+  name: Joi.string().min(3).example("National Gallery").required(),
+  lat: Joi.number().example(49.01).required(),
+  lng: Joi.number().example(12.10).required(),
+  countAllVisitors: Joi.number().example(0).optional(),
+  countCurVisitors: Joi.number().example(0).optional(),
+}).label("Gallery Details - Handed by the User");
 
 export const GalleryDBSpec = GalleryTemplateSpec.keys({
   user: UserRef,

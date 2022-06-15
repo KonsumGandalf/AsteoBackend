@@ -7,31 +7,30 @@ import { validationError } from "./logger.js";
 
 export const artistsApi = {
   create: {
-    auth: {
-      strategy: "jwt",
-    },
-    handler: async (request, h) => {
-      try {
-        const artistTemplate = {
-          firstName: request.payload.firstName,
-          lastName: request.payload.lastName,
-          description: request.payload.description,
-          countPaintings: request.payload.countPaintings,
-          image: request.payload.image,
-          user: request.auth.credentials,
-        };
-        const artist = await db.artistStore.createArtist(artistTemplate);
-        if (artist) return h.response(artist).code(201);
-        return Boom.badImplementation("Error creating artist");
-      } catch (err) {
-        return Boom.serverUnavailable("Database Error - Error creating artist");
-      }
-    },
-    tags: ["api", "artist"],
-    description: "Creates an artist",
-    notes: "Creates a new user in the DataBase if the firstName and lastName is not already taken.",
-    validate: { payload: ArtistTemplateSpec, failAction: validationError },
-    response: { schema: ArtistDBSpec, failAction: validationError },
+      auth: {
+          strategy: "jwt",
+      },
+      handler: async (request, h) => {
+          try {
+              const artistTemplate = {
+                firstName: request.payload.firstName,
+                lastName: request.payload.lastName,
+                description: request.payload.description,
+                image: request.payload.image,
+                user: request.auth.credentials,
+              };
+              const artist = await db.artistStore.createArtist(artistTemplate);
+              if (artist) return h.response(artist).code(201);
+              return Boom.badImplementation("Error creating artist");
+          } catch (err) {
+              return Boom.serverUnavailable("Database Error - Error creating artist");
+          }
+      },
+      tags: ["api", "artist"],
+      description: "Creates an artist",
+      notes: "Creates a new user in the DataBase if the firstName and lastName is not already taken.",
+      validate: { payload: ArtistTemplateSpec, failAction: validationError },
+      response: { schema: ArtistDBSpec, failAction: validationError },
   },
 
   findAll: {

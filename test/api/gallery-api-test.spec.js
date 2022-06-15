@@ -26,7 +26,6 @@ suite("Gallery API tests", () => {
         lng: testGalleriesJson[i].lng,
         countAllVisitors: testGalleriesJson[i].countAllVisitors,
         countCurVisitors: testGalleriesJson[i].countCurVisitors,
-        avgRating: testGalleriesJson[i].avgRating,
       };
       testGalleries[i] = await galleryService.createGallery(galleryTemplate);
     }
@@ -40,7 +39,6 @@ suite("Gallery API tests", () => {
       lng: testGalleriesJson[0].lng,
       countAllVisitors: testGalleriesJson[0].countAllVisitors,
       countCurVisitors: testGalleriesJson[0].countCurVisitors,
-      avgRating: testGalleriesJson[0].avgRating,
     };
     const newGallery = await galleryService.createGallery(galleryTemplate);
     assertSubset(testGalleriesJson[0], newGallery);
@@ -100,7 +98,6 @@ suite("Gallery API tests", () => {
         lng: testGalleriesJson[0].lng,
         countAllVisitors: testGalleriesJson[0].countAllVisitors,
         countCurVisitors: testGalleriesJson[0].countCurVisitors,
-        avgRating: testGalleriesJson[0].avgRating,
       };
       const newGallery = await galleryService.createGallery(galleryTemplate);
       allGalleries = await galleryService.getAllGalleries();
