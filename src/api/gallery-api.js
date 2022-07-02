@@ -21,7 +21,6 @@ export const galleriesApi = {
           user: request.auth.credentials,
         };
         const gallery = await db.galleryStore.createGallery(galleryTemplate);
-        console.log(gallery);
         if (gallery) return h.response(gallery).code(201);
         return Boom.badImplementation("Error creating gallery");
       } catch (err) {

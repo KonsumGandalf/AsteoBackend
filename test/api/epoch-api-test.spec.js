@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-await-in-loop */
 import { assert } from "chai";
-import { userService, epochService, consoleMan } from "./asteo-service.js";
+import { userService, epochService } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
 import {
  vaderRank2, lukeRank0, testEpochsJson, vaderCredentials, lukeCredentials,
@@ -46,7 +46,6 @@ suite("Epoch API tests", () => {
 
   test("get an epoch - success", async () => {
     const newEpoch = await epochService.getEpoch(testEpochs[0]._id);
-    consoleMan(testEpochs[0], newEpoch);
     assertSubset(testEpochs[0], newEpoch);
   });
 

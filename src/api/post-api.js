@@ -25,8 +25,7 @@ export const postsApi = {
           user: request.auth.credentials,
         };
         const post = await db.postStore.createPost(postTemplate);
-        const res = h.response(post).code(201);
-        console.log(res);
+        h.response(post).code(201);
         if (post) return h.response(post).code(201);
         return Boom.badImplementation("Error creating post");
       } catch (err) {

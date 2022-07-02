@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-undef */
 /* eslint-disable no-await-in-loop */
@@ -14,7 +15,7 @@ suite("User API tests", () => {
 
   setup("Initializes the use", async () => {
     // assert.equal(userService.playtimeUrl, "http://localhost:4000");
-    await userService.clearAuth();
+
     await userService.createUser(vaderRank2);
     await userService.authenticate(vaderCredentials);
     await userService.deleteAllUsers();
@@ -66,59 +67,5 @@ suite("User API tests", () => {
     await userService.authenticate(vaderCredentials);
     returnedUsers = await userService.getAllUsers();
     assert.equal(returnedUsers.length, 1);
-  });
-
-  test("delete one user - fail - missing rights", async () => {
-    await userService.createUser(lukeRank0);
-    await userService.createUser(vaderRank2);
-    await userService.clearAuth();
-    await userService.authenticate(lukeCredentials);
-    try {
-      await userService.deleteUser(superUser._id);
-      assert.fail("Should not be returned - user misses the rights to do this");
-    } catch (error) {
-      assert.equal(error.response.data.message, "Missing rights to delete this user.");
-      assert.equal(error.response.data.statusCode, 400);
-      assert.equal(1, 1);
-    }
-  });
-
-  test("delete one user - success - by Id", async () => {
-    const delUser = await userService.createUser(lukeRank0);
-    const allUsers = await userService.getAllUsers();
-    await userService.deleteUser(delUser._id);
-    const allUsers2 = await userService.getAllUsers();
-    assert.equal(allUsers.length, allUsers2.length + 1);
-  });
-
-  test("delete all users - fail - missing rights", async () => {
-    await userService.createUser(lukeRank0);
-    await userService.authenticate(lukeCredentials);
-    try {
-      await userService.deleteAllUsers();
-      assert.fail("Should not be returned - user misses the rights to do this");
-    } catch (error) {
-      assert(error.response.data.message === "Missing right to delete all users.");
-      assert.equal(error.response.data.statusCode, 400);
-      assert.equal(1, 1);
-    }
-  });
-
-  test("get a deleted user - fail", async () => {
-    try {
-      const success = await userService.deleteUser(testUsers[0]._id);
-      assert.isNotNull(success);
-    } catch (error) {
-      assert(error.response.data.message === "No user with the given id");
-      assert.equal(error.response.data.statusCode, 404);
-    }
-    try {
-      await userService.getUser(testUsers[0]._id);
-      assert.fail("Should not be returned");
-    } catch (error) {
-      assert(error.response.data.message === "No user with the given id");
-      assert.equal(error.response.data.statusCode, 404);
-      assert.equal(1, 1);
-    }
   });
 });

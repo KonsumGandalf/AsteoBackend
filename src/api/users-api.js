@@ -100,7 +100,6 @@ export const usersApi = {
       try {
         const requestingUser = request.auth.credentials;
         const success = await db.userStore.deleteUserById(request.params.id, requestingUser);
-        console.log(1);
         switch (success) {
           case -1:
             return Boom.badRequest("Missing rights to delete this user.");

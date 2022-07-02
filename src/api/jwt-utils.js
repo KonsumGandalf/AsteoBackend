@@ -7,7 +7,7 @@ dotenv.config();
 export function createToken(user) {
   const payload = {
     id: user._id,
-    email: user.email,
+    username: user.username,
   };
   const options = {
     algorithm: "HS256",
@@ -21,7 +21,7 @@ export function decodeToken(token) {
   try {
     const decoded = jwt.verify(token, process.env.password);
     userInfo.userId = decoded.id;
-    userInfo.email = decoded.email;
+    userInfo.username = decoded.username;
   } catch (e) {
     console.log(e.message);
   }
