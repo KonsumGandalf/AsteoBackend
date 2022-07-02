@@ -71,9 +71,7 @@ export const userMongoStore = {
    */
   async deleteUserById(deletionUserId, user) {
     try {
-      console.log(deletionUserId);
       const exUser = await this.getUserById(deletionUserId);
-      console.log(exUser);
       if (user.rank > exUser.rank && user.rank >= exUser.rank) {
         await User.deleteOne({ _id: deletionUserId });
         return 1;

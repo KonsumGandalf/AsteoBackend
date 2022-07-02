@@ -190,21 +190,16 @@ export const paintingService = {
   },
 
   async getAllPaintingsByGallery(galleryId) {
-    console.log("getAllPaintingsByGallery");
-
     const res = await axios.get(`${serviceUrl}/api/galleries/${galleryId}/paintings`);
     return res.data;
   },
 
   async getAllPaintingsByArtist(artistId) {
-    console.log("getAllPaintingsByArtist");
     const res = await axios.get(`${serviceUrl}/api/artists/${artistId}/paintings`);
     return res.data;
   },
 
   async getAllPaintingsByEpoch(epochId) {
-    console.log("getAllPaintingsByEpoch");
-
     const res = await axios.get(`${serviceUrl}/api/epochs/${epochId}/paintings`);
     return res.data;
   },
@@ -219,9 +214,3 @@ export const paintingService = {
     return res.data;
   },
 };
-
-export function consoleMan(input, output) {
-  console.log("Console Man");
-  console.log(input);
-  console.log(output);
-}

@@ -12,7 +12,6 @@ export const paintingsApi = {
     },
     handler: async (request, h) => {
       try {
-        console.log(request.payload);
         const gallery = await db.galleryStore.getGalleryById(request.payload.gallery);
         const epoch = await db.epochStore.getEpochById(request.payload.epoch);
         const artist = await db.artistStore.getArtistById(request.payload.artist);
@@ -29,9 +28,7 @@ export const paintingsApi = {
           image: request.payload.image,
           user: request.auth.credentials,
         };
-        console.log(paintingTemplate);
         const painting = await db.paintingStore.createPainting(paintingTemplate);
-        console.log(`was created`);
         if (painting) return h.response(painting).code(201);
         return Boom.badImplementation("Error creating painting");
       } catch (err) {
