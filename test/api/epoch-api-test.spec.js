@@ -4,7 +4,9 @@
 import { assert } from "chai";
 import { userService, epochService, consoleMan } from "./asteo-service.js";
 import { assertSubset } from "../test-utils.js";
-import { vaderRank2, lukeRank0, testEpochsJson, vaderCredentials, lukeCredentials } from "../fixtures.spec.js";
+import {
+ vaderRank2, lukeRank0, testEpochsJson, vaderCredentials, lukeCredentials,
+} from "../fixtures.spec.js";
 
 suite("Epoch API tests", () => {
   const testEpochs = [];
@@ -23,6 +25,7 @@ suite("Epoch API tests", () => {
         name: testEpochsJson[i].name,
         description: testEpochsJson[i].description,
         yearSpan: testEpochsJson[i].yearSpan,
+        image: testEpochsJson[i].image,
       };
       testEpochs[i] = await epochService.createEpoch(epochTemplate);
     }
@@ -34,6 +37,7 @@ suite("Epoch API tests", () => {
       name: testEpochsJson[0].name,
       description: testEpochsJson[0].description,
       yearSpan: testEpochsJson[0].yearSpan,
+      image: testEpochsJson[0].image,
     };
     const newEpoch = await epochService.createEpoch(epochTemplate);
     assertSubset(testEpochsJson[0], newEpoch);
@@ -74,11 +78,12 @@ suite("Epoch API tests", () => {
     // new authentication with baseUser
     await userService.createUser(lukeRank0);
     await userService.authenticate(lukeCredentials);
-    try{
+    try {
       const epochTemplate = {
         name: testEpochsJson[0].name,
         description: testEpochsJson[0].description,
         yearSpan: testEpochsJson[0].yearSpan,
+        image: testEpochsJson[0].image,
       };
       const newEpoch = await epochService.createEpoch(epochTemplate);
       allEpochs = await epochService.getAllEpochs();

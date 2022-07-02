@@ -7,7 +7,7 @@ dotenv.config();
 export function createToken(user) {
   const payload = {
     id: user._id,
-    username: user.username,
+    email: user.email,
   };
   const options = {
     algorithm: "HS256",
@@ -19,19 +19,33 @@ export function createToken(user) {
 export function decodeToken(token) {
   const userInfo = {};
   try {
-    const decodedInfo = jwt.verify(token, process.env.password);
-    userInfo.userId = decodedInfo.id;
-    userInfo.username = decodedInfo.username;
+    const decoded = jwt.verify(token, process.env.password);
+    userInfo.userId = decoded.id;
+    userInfo.email = decoded.email;
   } catch (e) {
     console.log(e.message);
   }
   return userInfo;
 }
 
-export async function validate(decoded, request) { // unnecessary parameter
+export async function validate(decoded) {
+  // request
   const user = await db.userStore.getUserById(decoded.id);
   if (!user) {
     return { isValid: false };
   }
   return { isValid: true, credentials: user };
+}
+
+export function getUserIdFromRequest(request) {
+  let userId = null;
+  try {
+    const { authorization } = request.headers;
+    const token = authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, "secretpasswordnotrevealedtoanyone");
+    userId = decodedToken.id;
+  } catch (e) {
+    userId = null;
+  }
+  return userId;
 }

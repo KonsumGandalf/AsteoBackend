@@ -28,6 +28,31 @@ export const usersApi = {
     response: { schema: UserDBSpec, failAction: validationError },
   },
 
+  update: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async (request, h) => {
+      try {
+        const requestingUser = request.auth.credentials;
+        const user = await db.userStore.updateUser(request.payload, requestingUser);
+        switch (user) {
+          case -1:
+            return Boom.badRequest("Missing rights to update this user.");
+          default:
+            return h.response(user).code(201);
+        }
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error - error updating user");
+      }
+    },
+    tags: ["api", "user"],
+    description: "Updates an existing user",
+    notes: "Updates an existing user in the DataBase (combines deletion and ).",
+    validate: { payload: UserDBSpec, failAction: validationError },
+    response: { schema: UserDBSpec, failAction: validationError },
+  },
+
   findAll: {
     auth: {
       strategy: "jwt",
@@ -38,7 +63,7 @@ export const usersApi = {
         if (users) return users;
         return Boom.notFound("No users in the Database");
       } catch (err) {
-          return Boom.serverUnavailable("Database Error - No users in the Database");
+        return Boom.serverUnavailable("Database Error - No users in the Database");
       }
     },
     tags: ["api", "user"],
@@ -49,7 +74,7 @@ export const usersApi = {
 
   findOne: {
     auth: {
-        strategy: "jwt",
+      strategy: "jwt",
     },
     handler: async (request) => {
       try {
@@ -57,7 +82,7 @@ export const usersApi = {
         if (!user) return Boom.notFound("No user with the given id");
         return user;
       } catch (err) {
-          return Boom.serverUnavailable("Database Error - No user with the given id");
+        return Boom.serverUnavailable("Database Error - No user with the given id");
       }
     },
     tags: ["api", "user"],
@@ -75,13 +100,19 @@ export const usersApi = {
       try {
         const requestingUser = request.auth.credentials;
         const success = await db.userStore.deleteUserById(request.params.id, requestingUser);
+        console.log(1);
         switch (success) {
-          case -1: return Boom.badRequest("Missing rights to delete this user.");
-          case 0: return Boom.badImplementation(`No user with id ${request.params.id} => could not be deleted`);
-          default: return h.response(success).code(204);
+          case -1:
+            return Boom.badRequest("Missing rights to delete this user.");
+          case 0:
+            return Boom.badImplementation(`No user with id ${request.params.id} => could not be deleted`);
+          default:
+            return h.response(success).code(204);
         }
       } catch (err) {
-          return Boom.serverUnavailable(`Missing rights or Database Error - error deleting the user with id ${request.params.id}`);
+        return Boom.serverUnavailable(
+          `Missing rights or Database Error - error deleting the user with id ${request.params.id}`,
+        );
       }
     },
     tags: ["api", "user"],
@@ -92,19 +123,21 @@ export const usersApi = {
 
   deleteAll: {
     auth: {
-        strategy: "jwt",
+      strategy: "jwt",
     },
     handler: async (request, h) => {
-        try {
-          const requestingUser = request.auth.credentials;
-          const success = await db.userStore.deleteAll(requestingUser);
-          switch (success) {
-            case -1: return Boom.badRequest("Missing right to delete all users.");
-            default: return h.response(success).code(204);
-          }
-        } catch (err) {
-          return Boom.serverUnavailable("Database Error - No users in Database");
+      try {
+        const requestingUser = request.auth.credentials;
+        const success = await db.userStore.deleteAll(requestingUser);
+        switch (success) {
+          case -1:
+            return Boom.badRequest("Missing right to delete all users.");
+          default:
+            return h.response(success).code(204);
         }
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error - No users in Database");
+      }
     },
     tags: ["api", "user"],
     description: "Deletes all users",
@@ -112,24 +145,25 @@ export const usersApi = {
   },
 
   authenticate: {
-      auth: false,
-      handler: async (request, h) => {
-        try {
-          const user = await db.userStore.getUserByUsername(request.payload.username);
-          if (!user) {
-            return Boom.unauthorized("User not found");
-          } if (user.password !== request.payload.password) {
-            return Boom.unauthorized("Invalid password");
-          }
-          return h.response({ success: true, token: createToken(user) }).code(201);
-        } catch (err) {
-            return Boom.serverUnavailable("Database Error");
+    auth: false,
+    handler: async (request, h) => {
+      try {
+        const user = await db.userStore.getUserByUsername(request.payload.username);
+        if (!user) {
+          return Boom.unauthorized("User not found");
         }
-      },
-      tags: ["api", "user"],
-      description: "Authenticate a user",
-      notes: "The User is determines with his rank which of the API commands a later available",
-      validate: { payload: UserLoginSpec, failAction: validationError },
-      response: { schema: AuthSpec, failAction: validationError },
+        if (user.password !== request.payload.password) {
+          return Boom.unauthorized("Invalid password");
+        }
+        return h.response({ success: true, token: createToken(user), _id: user._id }).code(201);
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
     },
+    tags: ["api", "user"],
+    description: "Authenticate a user",
+    notes: "The User is determines with his rank which of the API commands a later available",
+    validate: { payload: UserLoginSpec, failAction: validationError },
+    response: { schema: AuthSpec, failAction: validationError },
+  },
 };

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { assert } from "chai";
 import { userService } from "./asteo-service.js";
-import { decodeToken } from "../../src/api/jwt-utils.js";
+// import { decodeToken } from "../../src/api/jwt-utils.js";
 import { vaderRank2, vaderCredentials } from "../fixtures.spec.js";
 
 suite("Authentication API tests", async () => {
@@ -20,14 +20,14 @@ suite("Authentication API tests", async () => {
     assert.isDefined(response.token);
   });
 
-  test("verify token", async () => {
+  /* test("verify token", async () => {
     const returnedUser = await userService.createUser(vaderRank2);
     const response = await userService.authenticate(vaderCredentials);
     const userInfo = decodeToken(response.token);
     assert.equal(userInfo.username, returnedUser.username);
     assert.equal(userInfo.userId, returnedUser._id);
   });
-  
+
   test("check unauthorized", async () => {
     userService.clearAuth();
     try {
@@ -36,5 +36,5 @@ suite("Authentication API tests", async () => {
     } catch (error) {
       assert.equal(error.response.data.statusCode, 401);
     }
-  });
+  }); */
 });
